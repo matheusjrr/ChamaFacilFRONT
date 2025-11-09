@@ -1,0 +1,68 @@
+@import url('chamados.css');
+
+.perfil-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.foto-perfil {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+}
+
+.perfil-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+    .perfil-form label {
+        font-weight: 600;
+    }
+
+    .perfil-form input,
+    .perfil-form select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: var(--radius);
+        font-family: 'Poppins', sans-serif;
+    }
+
+        .perfil-form input:focus,
+        .perfil-form select:focus {
+            outline: 2px solid var(--primary);
+        }
+
+.btn-chamado {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .btn-chamado:hover {
+        background: #384a83;
+    }
+
+/* ===== FOOTER ===== */
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}

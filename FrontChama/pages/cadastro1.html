@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Cadastro</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <!-- Fonte Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" href="cadastro1.css" />
+</head>
+
+
+<body class="bg-[#EDEDED] flex justify-center items-center h-screen font-[Poppins]">
+
+    <div class="cadastro-container flex bg-white shadow-xl rounded-2xl overflow-hidden animate-fadeIn w-[950px] h-auto">
+
+        <!-- Left Section -->
+        <div class="left-panel bg-[#2F374C] text-white flex flex-col justify-center items-center w-[40%] p-10">
+            <div class="text-left mb-10">
+                <h2 class="text-3xl font-bold mb-4">Bem-vindo de volta!</h2>
+                <p class="text-base">Acesse sua conta agora mesmo</p>
+            </div>
+
+            <a href="login.html"
+               class="border-2 border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-[#2F374C] transition-all font-semibold">
+                ENTRAR
+            </a>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-panel flex flex-col justify-center items-center w-[60%] p-10 relative">
+
+            <button onclick="window.location.href='login.html'" class="absolute top-5 left-5 text-[#2F374C] hover:scale-110 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="#2F374C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
+            </button>
+
+            <h2 class="text-2xl font-semibold text-[#2F374C] mb-6">Crie sua conta</h2>
+
+            <form id="cadastroForm" class="flex flex-col items-center w-full">
+                <input type="text" id="nome" placeholder="Digite seu nome completo..." class="input-field" />
+                <input type="date" id="nascimento" placeholder="Data de nascimento" class="input-field" />
+                <input type="text" id="cpf" placeholder="Digite seu CPF (apenas números)..." class="input-field" maxlength="11" />
+                <input type="text" id="funcional" placeholder="Digite sua funcional..." class="input-field" />
+                <input type="email" id="email" placeholder="Digite seu e-mail..." class="input-field" />
+                <input type="password" id="senha" placeholder="Crie uma senha..." class="input-field" />
+                <input type="password" id="confirmarSenha" placeholder="Confirme sua senha..." class="input-field" />
+
+                <div class="flex items-center mt-2 mb-5 text-sm text-[#2F374C]">
+                    <input type="checkbox" id="termos" class="mr-2 accent-[#2F374C]" />
+                    <label for="termos">Concordo com os <a href="termos.html" class="underline font-semibold hover:text-[#57607A]">Termos de Uso</a></label>
+                </div>
+
+                <button type="submit" class="bg-[#2F374C] text-white px-10 py-2.5 rounded-full hover:opacity-90 transition-all font-semibold">
+                    CADASTRAR
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="cadastro.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Perfil do Usuário</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="perfil.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="logo-wrapper">
+                    <img src="assets/logo.png" alt="Logo Chama Fácil" class="brand-logo">
+                </div>
+                <span class="brand-title">Chama Fácil</span>
+            </div>
+
+            <!-- Menu superior -->
+            <nav class="main-nav" aria-label="Menu principal">
+                <a class="nav-link active" href="faq.html">Central de Soluções</a>
+                <a class="nav-link" href="artigos.html">Artigos & Documentos</a>
+            </nav>
+
+            <div class="profile-area" title="Perfil">
+                <i class="fa-solid fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT GERAL -->
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="atividades.html"><i class="fa-solid fa-list-check"></i> Minhas Atividades</a></li>
+                <li><a href="chamados.html"><i class="fa-solid fa-headset"></i> Chamados</a></li>
+                <li class="active"><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+                <li><a href="login.html"><i class="fa-solid fa-clipboard-list"></i> Sair</a></li>
+            </ul>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="page">
+            <h1 class="hero-title">Meu Perfil</h1>
+
+            <section class="perfil-card">
+                <img src="assets/user.png" alt="Foto do usuário" class="foto-perfil">
+
+                <form class="perfil-form">
+                    <label>Nome Completo:</label>
+                    <input type="text" value="Lívia Stéfany" disabled>
+
+                    <label>E-mail:</label>
+                    <input type="email" value="livia@empresa.com">
+
+                    <label>Senha Atual:</label>
+                    <input type="password" placeholder="Digite sua senha atual">
+
+                    <label>Nova Senha:</label>
+                    <input type="password" placeholder="Digite sua nova senha">
+
+                    <label>Confirme a Nova Senha:</label>
+                    <input type="password" placeholder="Confirme sua nova senha">
+
+                    <button type="submit" class="btn-chamado">Salvar Alterações</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+    </footer>
+
+    <script>const form = document.querySelector('.perfil-form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Alterações salvas com sucesso!');
+    });</script>
+</body>
+</html>

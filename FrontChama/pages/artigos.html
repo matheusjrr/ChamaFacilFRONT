@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artigos & Documentos</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="artigos.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="assets/logo.png" alt="Logo Chama Fácil" class="brand-logo">
+        </div>
+        <span class="brand-title">Chama Fácil</span>
+      </div>
+
+      <!-- Menu superior -->
+      <nav class="main-nav" aria-label="Menu principal">
+        <a class="nav-link" href="faq.html">Central de Soluções</a>
+        <a class="nav-link" href="artigos.html">Artigos & Documentos</a>
+      </nav>
+
+      <div class="profile-area" title="Perfil">
+        <i class="fa-solid fa-user-circle"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="atividades.html"><i class="fa-solid fa-list-check"></i> Minhas Atividades</a></li>
+        <li><a href="chamados.html"><i class="fa-solid fa-headset"></i> Chamados</a></li>
+        <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+        <li><a href="login.html"><i class="fa-solid fa-clipboard-list"></i> Sair</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="page artigos-container">
+      <h1>Artigos & Documentos</h1>
+
+      <div class="cards-container">
+        <div class="card">
+          <i class="fa-solid fa-file-code"></i>
+          <h3>Boas práticas de desenvolvimento</h3>
+          <p>Dicas e estratégias para manter o código limpo, legível e sustentável.</p>
+          <a href="#" class="btn-chamado">Ler artigo</a>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-lock"></i>
+          <h3>Guia de Segurança Digital</h3>
+          <p>Documentação essencial sobre como proteger dados e evitar ataques cibernéticos.</p>
+          <a href="#" class="btn-chamado">Abrir documento</a>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-database"></i>
+          <h3>Banco de Dados — Conceitos e Otimização</h3>
+          <p>Aprenda sobre normalização, índices e consultas otimizadas.</p>
+          <a href="#" class="btn-chamado">Ler mais</a>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-brain"></i>
+          <h3>Inteligência Artificial na Automação</h3>
+          <p>Artigo explicando como IA pode agilizar processos em empresas de e-commerce.</p>
+          <a href="#" class="btn-chamado">Ver artigo</a>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-chart-line"></i>
+          <h3>Relatórios e Power BI</h3>
+          <p>Guia prático sobre criação de dashboards interativos e análise de dados.</p>
+          <a href="#" class="btn-chamado">Baixar PDF</a>
+        </div>
+
+        <div class="card">
+          <i class="fa-solid fa-network-wired"></i>
+          <h3>Infraestrutura e Redes</h3>
+          <p>Documentação técnica sobre servidores, protocolos e segurança de rede.</p>
+          <a href="#" class="btn-chamado">Ver mais</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+  </footer>
+
+  <!-- Script para ativar o link correto do header -->
+  <script>
+    const navLinks = document.querySelectorAll('.main-nav .nav-link');
+    const currentPage = window.location.pathname.split('/').pop();
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPage) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>
