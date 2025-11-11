@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Central de Chamados - Técnico</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="tec_faq.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <img src="assets/logo.png" alt="Logo Chama Fácil" class="brand-logo">
+        </div>
+        <span class="brand-title">Chama Fácil</span>
+      </div>
+
+      <nav class="main-nav" aria-label="Menu principal">
+        <a class="nav-link active" href="#">Central de Soluções - TÉCNICO</a>
+      </nav>
+
+      <div class="profile-area" title="Perfil">
+        <i class="fa-solid fa-user-circle"></i>
+      </div>
+    </div>
+  </header>
+
+     <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="home.html"><i class="fa-solid fa-clipboard-list"></i> Sair</a></li>
+      </ul>
+    </aside>
+
+    <main class="page">
+      <h1 class="hero-title"><i class="fa-solid fa-headset"></i> Central de Chamados</h1>
+
+      <!-- Status Cards -->
+      <div class="status-cards">
+        <button class="status-card active" data-status="pendente">
+          <i class="fa-regular fa-clock"></i> Pendentes 
+          <span class="badge">0</span>
+        </button>
+        <button class="status-card" data-status="em-andamento">
+          <i class="fa-solid fa-spinner"></i> Em andamento 
+          <span class="badge">0</span>
+        </button>
+        <button class="status-card" data-status="concluido">
+          <i class="fa-solid fa-circle-check"></i> Concluídos 
+          <span class="badge">0</span>
+        </button>
+      </div>
+
+      <!-- Pesquisa -->
+      <div class="search-area">
+        <input type="search" id="searchInput" placeholder="Pesquisar por ID, categoria ou descrição..." />
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      </div>
+
+      <!-- Lista de Chamados -->
+      <div id="chamadosList" class="chamados-list"></div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modalChamado">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="modalId"></h3>
+      <p><strong>Categoria:</strong> <span id="modalCategoria"></span></p>
+      <p><strong>Solicitante:</strong> <span id="modalUsuario"></span></p>
+      <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+      <p><strong>Descrição:</strong> <span id="modalDescricao"></span></p>
+      <p><strong>Técnico responsável:</strong> <span id="modalTecnico"></span></p>
+      <textarea id="modalObservacao" placeholder="Adicione observações sobre o atendimento..."></textarea>
+      <button id="btnToggleStatus" class="btn-chamado"></button>
+    </div>
+  </div>
+
+
+  <footer class="site-footer">
+    <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+  </footer>
+
+  <script src="tec_faq.js"></script>
+</body>
+</html>

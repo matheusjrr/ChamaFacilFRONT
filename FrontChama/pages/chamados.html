@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chamados</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Fontes e ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="chamados.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="logo-wrapper">
+                    <img src="assets/logo.png" alt="Logo Chama Fácil" class="brand-logo">
+                </div>
+                <span class="brand-title">Chama Fácil</span>
+            </div>
+
+            <!-- Menu superior -->
+            <nav class="main-nav" aria-label="Menu principal">
+                <a class="nav-link active" href="faq.html">Central de Soluções</a>
+                <a class="nav-link" href="artigos.html">Artigos & Documentos</a>
+                <a href="conteudos.html" class="nav-link">Conteúdos</a>
+            </nav>
+
+            <div class="profile-area" title="Perfil">
+                <i class="fa-solid fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="atividades.html"><i class="fa-solid fa-list-check"></i> Minhas Atividades</a></li>
+                <li class="active"><a href="chamados.html"><i class="fa-solid fa-headset"></i> Chamados</a></li>
+                <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+                <li><a href="home.html"><i class="fa-solid fa-clipboard-list"></i> Sair</a></li>
+            </ul>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="page">
+            <h1 class="hero-title">Central de Chamados</h1>
+
+            <!-- Seletor de seções -->
+            <div class="search-area">
+                <button class="nav-btn active" data-section="novo-chamado">+ Novo Chamado</button>
+                <button class="nav-btn" data-section="pendentes">Pendentes</button>
+                <button class="nav-btn" data-section="concluidos">Concluídos</button>
+            </div>
+
+            <!-- SEÇÃO: Novo Chamado -->
+            <section id="novo-chamado" class="chamado-section faq-section active">
+                <h2>Abrir Novo Chamado</h2>
+                <form id="form-chamado" class="card">
+                    <label>Categoria:</label>
+                    <select class="input-select-categoria" required>
+                        <option value="">Selecione...</option>
+                        <option value="2">TI</option>
+                        <option value="3">Equipamento</option>
+                        <option value="4">Infraestrutura</option>
+                    </select>
+
+                    <label>Descrição:</label>
+                    <textarea class="input-descricao-categoria" placeholder="Descreva o problema..." required></textarea>
+
+                    <button type="submit" class="btn-chamado">Enviar Chamado</button>
+                </form>
+            </section>
+
+            <!-- SEÇÃO: Chamados Pendentes -->
+            <section id="pendentes" class="chamado-section faq-section">
+                <h2>Chamados Pendentes</h2>
+                <table class="faq-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody class="chamado-tbody"></tbody>
+                </table>
+            </section>
+
+            <!-- SEÇÃO: Chamados Concluídos -->
+            <section id="concluidos" class="chamado-section faq-section">
+                <h2>Chamados Concluídos</h2>
+                <table class="faq-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody class="chamado-tbody"></tbody>
+                </table>
+            </section>
+
+            <!-- Modal -->
+            <div class="modal" id="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Detalhes do Chamado</h3>
+                    <p><strong>ID:</strong> <span id="modal-id"></span></p>
+                    <p><strong>Categoria:</strong> <span id="modal-categoria"></span></p>
+                    <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                    <p><strong>Descrição:</strong> <span id="modal-descricao"></span></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div>©️ 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+    </footer>
+
+<script>
+const navButtons = document.querySelectorAll('.nav-btn');
+const sections = document.querySelectorAll('.chamado-section');
+let chamados = [];
+
+// Mapeamento de categorias
+const categoriasMap = {
+  2: 'TI',
+  3: 'Equipamento',
+  4: 'Infraestrutura'
+};
+
+// Alterna seções
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    navButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const sectionId = btn.getAttribute('data-section');
+
+    sections.forEach(sec => sec.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
+
+    if(sectionId === 'pendentes' || sectionId === 'concluidos') {
+        fetchChamados(sectionId);
+    }
+  });
+});
+
+// Modal
+const modal = document.getElementById('modal');
+const closeModal = document.querySelector('.close');
+closeModal.addEventListener('click', () => modal.style.display = 'none');
+window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+// Formulário
+const form = document.getElementById('form-chamado');
+const categoriaInput = document.querySelector('.input-select-categoria');
+const descricaoInput = document.querySelector('.input-descricao-categoria');
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+
+  if (!descricaoInput.value || !categoriaInput.value) {
+      alert("Preencha todos os campos.");
+      return;
+  }
+
+  const bodyRequest = {
+    descricao: descricaoInput.value,
+    numero_chamado: Math.floor(Math.random() * 1000),
+    data_abertura: new Date().toISOString(),
+    status: "Pendente",
+    id_usuario: 1,
+    id_categoria: parseInt(categoriaInput.value)
+  };
+
+  fetch("https://localhost:7271/api/v1/Chamado", {
+    method: "POST",
+    body: JSON.stringify(bodyRequest),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(response => {
+    if (!response.ok) throw new Error("Erro na requisição: " + response.status);
+    return response.json();
+  })
+  .then(() => {
+    alert("Chamado criado com sucesso!");
+    form.reset();
+    fetchChamados('pendentes');
+  })
+  .catch(err => console.error(err));
+});
+
+// Busca chamados e popula tabela
+function fetchChamados(sectionId) {
+  fetch("https://localhost:7271/api/v1/Chamado", {
+    method: "GET",
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(response => {
+    if (!response.ok) throw new Error("Erro na requisição: " + response.status);
+    return response.json();
+  })
+  .then(data => {
+    chamados = data;
+    populateTable(sectionId);
+  })
+  .catch(err => console.error(err));
+}
+
+// Preenche a tabela
+function populateTable(sectionId) {
+  const tbody = sectionId === 'pendentes' 
+                ? document.querySelector('#pendentes .chamado-tbody') 
+                : document.querySelector('#concluidos .chamado-tbody');
+  tbody.innerHTML = "";
+
+  const filtered = sectionId === 'pendentes'
+                   ? chamados.filter(c => {
+                       const s = c.status.toLowerCase();
+                       return s === 'pendente' || s === 'em-andamento';
+                     })
+                   : chamados.filter(c => {
+                       const s = c.status.toLowerCase();
+                       return s === 'concluido' || s === 'concluído';
+                     });
+
+  filtered.forEach(chamado => {
+    const s = chamado.status.toLowerCase();
+    const statusClass = (s === 'pendente' || s === 'em-andamento') ? 'pendente' : 'concluido';
+
+    // Padroniza os textos
+    let displayStatus;
+    if (s === 'em-andamento') displayStatus = 'Em andamento';
+    else if (s === 'concluido' || s === 'concluído') displayStatus = 'Concluído';
+    else displayStatus = chamado.status;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>#${chamado.id_chamado ?? chamado.numero_chamado}</td>
+      <td>${categoriasMap[chamado.id_categoria] || chamado.id_categoria}</td>
+      <td><span class="status ${statusClass}">${displayStatus}</span></td>
+      <td>${new Date(chamado.data_abertura).toLocaleDateString()}</td>
+      <td><button class="detalhes-btn btn-chamado">Ver Detalhes</button></td>
+    `;
+    tbody.appendChild(tr);
+
+    const detalhesBtn = tr.querySelector('.detalhes-btn');
+    detalhesBtn.addEventListener('click', () => showModal(chamado));
+  });
+}
+
+// Modal com dados reais
+function showModal(chamado) {
+  const s = chamado.status.toLowerCase();
+  let displayStatus;
+  if (s === 'em-andamento') displayStatus = 'Em andamento';
+  else if (s === 'concluido' || s === 'concluído') displayStatus = 'Concluído';
+  else displayStatus = chamado.status;
+
+  document.getElementById('modal-id').textContent = `#${chamado.id_chamado ?? chamado.numero_chamado}`;
+  document.getElementById('modal-categoria').textContent = categoriasMap[chamado.id_categoria] || chamado.id_categoria;
+  document.getElementById('modal-status').textContent = displayStatus;
+  document.getElementById('modal-descricao').textContent = chamado.descricao;
+  modal.style.display = 'flex';
+}
+
+// Carrega pendentes inicialmente
+fetchChamados('pendentes');
+</script>
+
+</body>
+</html>

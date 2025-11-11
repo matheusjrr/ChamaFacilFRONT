@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Conteúdos</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="conteudos.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="logo-wrapper">
+                    <img src="assets/logo.png" alt="Logo Chama Fácil" class="brand-logo">
+                </div>
+                <span class="brand-title">Chama Fácil</span>
+            </div>
+
+            <!-- Menu superior -->
+            <nav class="main-nav" aria-label="Menu principal">
+                <a class="nav-link" href="faq.html">Central de Soluções</a>
+                <a class="nav-link" href="artigos.html">Artigos & Documentos</a>
+                <a class="nav-link active" href="conteudos.html">Conteúdos</a>
+            </nav>
+
+            <div class="profile-area" title="Perfil">
+                <i class="fa-solid fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- Sidebar Menu Lateral -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="atividades.html"><i class="fa-solid fa-list-check"></i> Minhas Atividades</a></li>
+                <li><a href="chamados.html"><i class="fa-solid fa-headset"></i> Chamados</a></li>
+                <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+                <li><a href="home.html"><i class="fa-solid fa-user"></i> Sair</a></li>
+            </ul>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="page">
+            <h1 class="hero-title">Conteúdos</h1>
+
+            <!-- Seletor de abas -->
+            <div class="search-area">
+                <button class="nav-btn active" data-section="artigos">Artigos</button>
+                <button class="nav-btn" data-section="documentos">Documentos</button>
+            </div>
+
+            <!-- SEÇÃO: Artigos -->
+            <section id="artigos" class="conteudo-section faq-section active">
+                <h2>Artigos</h2>
+                <div class="category-cards">
+                    <a href="#" class="cat-card-link">
+                        <article class="cat-card">
+                            <div class="cat-icon"><i class="fa-solid fa-newspaper"></i></div>
+                            <h3>Guia de Acesso</h3>
+                            <p>Aprenda como acessar o sistema passo a passo.</p>
+                            <div class="card-footer">Leia mais <i class="fa-solid fa-arrow-right"></i></div>
+                        </article>
+                    </a>
+
+                    <a href="#" class="cat-card-link">
+                        <article class="cat-card">
+                            <div class="cat-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                            <h3>Dicas de Produtividade</h3>
+                            <p>Otimize seu trabalho com essas dicas práticas.</p>
+                            <div class="card-footer">Leia mais <i class="fa-solid fa-arrow-right"></i></div>
+                        </article>
+                    </a>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: Documentos -->
+            <section id="documentos" class="conteudo-section faq-section">
+                <h2>Documentos</h2>
+                <div class="category-cards">
+                    <a href="#" class="cat-card-link">
+                        <article class="cat-card">
+                            <div class="cat-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                            <h3>Manual do Usuário</h3>
+                            <p>PDF com todas as instruções para colaboradores.</p>
+                            <div class="card-footer">Baixar <i class="fa-solid fa-arrow-down"></i></div>
+                        </article>
+                    </a>
+
+                    <a href="#" class="cat-card-link">
+                        <article class="cat-card">
+                            <div class="cat-icon"><i class="fa-solid fa-file-alt"></i></div>
+                            <h3>Política Interna</h3>
+                            <p>Documentos com regras e condutas da empresa.</p>
+                            <div class="card-footer">Baixar <i class="fa-solid fa-arrow-down"></i></div>
+                        </article>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="site-footer">
+        <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+    </footer>
+
+    <script>
+        // Troca de abas
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.conteudo-section');
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                navButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const sectionId = btn.getAttribute('data-section');
+                sections.forEach(sec => sec.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
