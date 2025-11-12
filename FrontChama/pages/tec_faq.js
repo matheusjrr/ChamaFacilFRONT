@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalObservacao = document.getElementById('modalObservacao');
   const btnToggleStatus = document.getElementById('btnToggleStatus');
 
+    const chatToggle = document.getElementById('chatToggle');
+    const chatModal = document.getElementById('chatModal');
+    const closeChat = document.getElementById('closeChat');
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+
   let chamados = [];
   let currentFilter = 'pendente';
   let currentSearch = '';
@@ -183,6 +190,79 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Erro ao atualizar status:', err);
     }
   });
+
+    chatToggle.addEventListener('click', () => {
+        chatModal.classList.toggle('hidden');
+    });
+
+    closeChat.addEventListener('click', () => {
+        chatModal.classList.add('hidden');
+    });
+
+    function addMessage(text, sender) {
+        const msg = document.createElement('div');
+        msg.className = 'msg flex items-end gap-2';
+        msg.innerHTML = sender === 'user'
+            ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
+            : `<img src='zedohelp.png' class='w-7 h-7 rounded-full'>
+               <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.id = 'typingIndicator';
+        typingDiv.className = 'msg flex items-end gap-2';
+        typingDiv.innerHTML = `
+            <img src='zedohelp.png' class='w-7 h-7 rounded-full'>
+            <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
+        chatBox.appendChild(typingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const typingDiv = document.getElementById('typingIndicator');
+        if (typingDiv) typingDiv.remove();
+    }
+
+    sendBtn.addEventListener('click', () => {
+        const text = userInput.value.trim();
+        if (!text || sendBtn.disabled) return;
+        addMessage(text, 'user');
+        userInput.value = '';
+        sendBtn.disabled = true;
+        userInput.disabled = true;
+
+        showTypingIndicator();
+
+        fetch('https://localhost:7271/api/ia/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: text,
+                sessionId: 'usuario-chat'
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                removeTypingIndicator();
+                addMessage(data.response || 'Desculpe, não entendi sua mensagem.', 'bot');
+            })
+            .catch(() => {
+                removeTypingIndicator();
+                addMessage('Ops! Algo deu errado ao falar com o assistente. 😢', 'bot');
+            })
+            .finally(() => {
+                sendBtn.disabled = false;
+                userInput.disabled = false;
+                userInput.focus();
+            });
+    });
+
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendBtn.click();
+    });
 
   // ===== Inicializar =====
   fetchChamados();

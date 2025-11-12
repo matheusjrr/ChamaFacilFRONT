@@ -8,7 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="tec_perfil.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
     <!-- Header -->
     <header class="site-header">
@@ -75,14 +78,135 @@
         </main>
     </div>
 
+    <!-- botão flutuante -->
+    <button id="chatToggle" class="fixed bottom-6 right-6 bg-[#3B82F6] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-[#1E40AF] transition z-50">
+        💬
+    </button>
+
+    <!-- modal do chat -->
+    <div id="chatModal" class="hidden fixed bottom-20 right-6 w-[380px] max-w-[90%] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-200 z-50">
+        <!-- header -->
+        <header class="flex items-center justify-between bg-[#2F374C] text-white p-3">
+            <div class="flex items-center gap-3">
+                <img src="zedohelp.png" class="w-9 h-9 rounded-full bg-white p-1" alt="Zé Help">
+                <div>
+                    <h1 class="text-sm font-semibold leading-none">Zé Help</h1>
+                    <p class="text-xs opacity-80">Ajudante do Chama Fácil</p>
+                </div>
+            </div>
+            <button id="closeChat" class="text-lg font-bold hover:text-red-400 transition">×</button>
+        </header>
+
+        <!-- mensagens -->
+        <main id="chatBox" class="flex-1 p-3 overflow-y-auto bg-gray-50 space-y-3">
+            <div class="msg flex items-end gap-2">
+                <img src="zedohelp.png" class="w-7 h-7 rounded-full" alt="Zé Help">
+                <div class="bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm">
+                    Oi! Sou o Zé Help 😄 Como posso te ajudar hoje?
+                </div>
+            </div>
+        </main>
+
+        <!-- input -->
+        <div class="flex items-center gap-2 border-t border-gray-200 p-2 bg-white">
+            <input id="userInput" type="text" placeholder="Digite sua mensagem..."
+                   class="flex-1 border border-gray-300 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]">
+            <button id="sendBtn" class="bg-[#3B82F6] text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#1E40AF] transition">Enviar</button>
+        </div>
+    </div>
+
     <footer class="site-footer">
         <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
     </footer>
 
-    <script>const form = document.querySelector('.perfil-form');
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      alert('Alterações salvas com sucesso!');
-    });</script>
+    <script>
+        const form = document.querySelector('.perfil-form');
+        const chatToggle = document.getElementById('chatToggle');
+        const chatModal = document.getElementById('chatModal');
+        const closeChat = document.getElementById('closeChat');
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            alert('Alterações salvas com sucesso!');
+        });
+
+        chatToggle.addEventListener('click', () => {
+            chatModal.classList.toggle('hidden');
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatModal.classList.add('hidden');
+        });
+
+        function addMessage(text, sender) {
+            const msg = document.createElement('div');
+            msg.className = 'msg flex items-end gap-2';
+            msg.innerHTML = sender === 'user'
+                ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
+                : `<img src='zedohelp.png' class='w-7 h-7 rounded-full'>
+               <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'msg flex items-end gap-2';
+            typingDiv.innerHTML = `
+            <img src='zedohelp.png' class='w-7 h-7 rounded-full'>
+            <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
+            chatBox.appendChild(typingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingDiv = document.getElementById('typingIndicator');
+            if (typingDiv) typingDiv.remove();
+        }
+
+        sendBtn.addEventListener('click', () => {
+            const text = userInput.value.trim();
+            if (!text || sendBtn.disabled) return;
+            addMessage(text, 'user');
+            userInput.value = '';
+            sendBtn.disabled = true;
+            userInput.disabled = true;
+
+            showTypingIndicator();
+
+            fetch('https://localhost:7271/api/ia/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: text,
+                    sessionId: 'usuario-chat'
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    removeTypingIndicator();
+                    addMessage(data.response || 'Desculpe, não entendi sua mensagem.', 'bot');
+                })
+                .catch(() => {
+                    removeTypingIndicator();
+                    addMessage('Ops! Algo deu errado ao falar com o assistente. 😢', 'bot');
+                })
+                .finally(() => {
+                    sendBtn.disabled = false;
+                    userInput.disabled = false;
+                    userInput.focus();
+                });
+        });
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendBtn.click();
+        });
+    </script>
+
+
 </body>
 </html>
