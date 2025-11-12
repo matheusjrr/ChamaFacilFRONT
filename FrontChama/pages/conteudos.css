@@ -247,6 +247,33 @@ body {
     display: block;
 }
 
+/* ===== CHATBOT ===== */
+#chatBox {
+    max-height: 500px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.msg {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ===== RESPONSIVO ===== */
 @media (max-width: 820px) {
     .layout {
