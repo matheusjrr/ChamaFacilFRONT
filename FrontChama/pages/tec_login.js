@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             try {
-                // 🔗 Chamada à API (login)
+                // 🔗 Chamada à API de login do técnico
                 const response = await fetch('https://localhost:7271/api/v1/Tecnico/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -78,8 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // ✅ Armazena técnico logado
-                localStorage.setItem('tecnicoLogado', JSON.stringify(tecnico));
+                // ✅ Cria objeto apenas com os campos que queremos armazenar
+                const tecnicoParaStorage = {
+                    id: tecnico.id_tecnico,
+                    nome: tecnico.nome_tecnico,
+                    funcional: tecnico.funcional
+                };
+
+                // ✅ Salva apenas os dados necessários na sessão
+                sessionStorage.setItem('tecnicoLogado', JSON.stringify(tecnicoParaStorage));
+
                 alert(`Bem-vindo, ${tecnico.nome_tecnico}!`);
 
                 // 🔁 Redireciona após o alerta (com pequeno atraso)

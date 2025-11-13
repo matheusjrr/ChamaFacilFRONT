@@ -78,8 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // ✅ Armazena usuário logado
-                localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+                // ✅ Cria objeto apenas com os campos que queremos armazenar
+                const usuarioParaStorage = {
+                    id: usuario.id_usuario,
+                    nome: usuario.nome_usuario,
+                    funcional: usuario.funcional
+                };
+
+                // ✅ Salva apenas os dados necessários na sessão
+                sessionStorage.setItem('usuarioLogado', JSON.stringify(usuarioParaStorage));
+
                 alert(`Bem-vindo, ${usuario.nome_usuario}!`);
 
                 // 🔁 Redireciona após o alerta (com pequeno atraso)
@@ -93,4 +101,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
 });

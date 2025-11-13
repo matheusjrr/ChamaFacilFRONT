@@ -13,39 +13,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalObservacao = document.getElementById('modalObservacao');
   const btnToggleStatus = document.getElementById('btnToggleStatus');
 
-    const chatToggle = document.getElementById('chatToggle');
-    const chatModal = document.getElementById('chatModal');
-    const closeChat = document.getElementById('closeChat');
-    const chatBox = document.getElementById('chatBox');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const modalConfirm = document.getElementById('modalConfirm');
-    const btnConfirmarSair = document.getElementById('btnConfirmarSair');
-    const btnCancelarSair = document.getElementById('btnCancelarSair');
-    const btnSair = document.getElementById('btnSair');
-    btnSair.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalConfirm.style.display = 'flex';
-    });
+  const chatToggle = document.getElementById('chatToggle');
+  const chatModal = document.getElementById('chatModal');
+  const closeChat = document.getElementById('closeChat');
+  const chatBox = document.getElementById('chatBox');
+  const userInput = document.getElementById('userInput');
+  const sendBtn = document.getElementById('sendBtn');
+  const modalConfirm = document.getElementById('modalConfirm');
+  const btnConfirmarSair = document.getElementById('btnConfirmarSair');
+  const btnCancelarSair = document.getElementById('btnCancelarSair');
+  const btnSair = document.getElementById('btnSair');
 
+  btnSair.addEventListener('click', (e) => {
+      e.preventDefault();
+      modalConfirm.style.display = 'flex';
+  });
 
   let chamados = [];
   let currentFilter = 'pendente';
   let currentSearch = '';
 
-  // ===== Mapear IDs de categoria para nomes =====
   const categoriasMap = {
     2: 'TI',
     3: 'Equipamento',
     4: 'Infraestrutura'
   };
 
-  // ===== Função para normalizar status =====
   function normalizeStatus(status) {
     return (status || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 
-  // ===== Buscar chamados =====
   async function fetchChamados() {
     try {
       const response = await fetch("https://localhost:7271/api/v1/Chamado");
@@ -58,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ===== Renderizar lista de chamados =====
   function renderChamados() {
     chamadosList.innerHTML = '';
 
@@ -87,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // ===== Atualizar badges =====
   function atualizarBadges() {
     const pendentes = chamados.filter(c => normalizeStatus(c.status) === 'pendente').length;
     const emAndamento = chamados.filter(c => normalizeStatus(c.status) === 'em-andamento').length;
@@ -104,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== Formatar status =====
   function formatarStatus(status) {
     switch (normalizeStatus(status)) {
       case 'pendente': return 'Pendente';
@@ -114,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ===== Filtro por status =====
   statusCards.forEach(card => {
     card.addEventListener('click', () => {
       statusCards.forEach(c => c.classList.remove('active'));
@@ -124,13 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== Pesquisa =====
   searchInput?.addEventListener('input', () => {
     currentSearch = searchInput.value.trim().toLowerCase();
     renderChamados();
   });
 
-  // ===== Abrir modal =====
   chamadosList.addEventListener('click', e => {
     if (e.target.classList.contains('btn-chamado')) {
       const id = e.target.dataset.id;
@@ -151,15 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ===== Fechar modal =====
-  closeModal?.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-  window.addEventListener('click', e => {
-    if (e.target === modal) modal.style.display = 'none';
-  });
+  closeModal?.addEventListener('click', () => modal.style.display = 'none');
+  window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
 
-  // ===== Atualizar botão =====
   function atualizarBotaoStatus(chamado) {
     const status = normalizeStatus(chamado.status);
     if (status === 'pendente') {
@@ -174,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ===== Atualizar status no backend =====
   btnToggleStatus?.addEventListener('click', async () => {
     try {
       const id = btnToggleStatus.dataset.id;
@@ -200,98 +184,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-    chatToggle.addEventListener('click', () => {
-        chatModal.classList.toggle('hidden');
-    });
+  chatToggle.addEventListener('click', () => chatModal.classList.toggle('hidden'));
+  closeChat.addEventListener('click', () => chatModal.classList.add('hidden'));
 
-    closeChat.addEventListener('click', () => {
-        chatModal.classList.add('hidden');
-    });
+  function addMessage(text, sender) {
+    const msg = document.createElement('div');
+    msg.className = 'msg flex items-end gap-2';
+    msg.innerHTML = sender === 'user'
+      ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
+      : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
+         <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
 
-    function addMessage(text, sender) {
-        const msg = document.createElement('div');
-        msg.className = 'msg flex items-end gap-2';
-        msg.innerHTML = sender === 'user'
-            ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
-            : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
-               <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
-        chatBox.appendChild(msg);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
+  function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.id = 'typingIndicator';
+    typingDiv.className = 'msg flex items-end gap-2';
+    typingDiv.innerHTML = `
+      <img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
+      <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
+    chatBox.appendChild(typingDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
 
-    function showTypingIndicator() {
-        const typingDiv = document.createElement('div');
-        typingDiv.id = 'typingIndicator';
-        typingDiv.className = 'msg flex items-end gap-2';
-        typingDiv.innerHTML = `
-            <img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
-            <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
-        chatBox.appendChild(typingDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
+  function removeTypingIndicator() {
+    const typingDiv = document.getElementById('typingIndicator');
+    if (typingDiv) typingDiv.remove();
+  }
 
-    function removeTypingIndicator() {
-        const typingDiv = document.getElementById('typingIndicator');
-        if (typingDiv) typingDiv.remove();
-    }
+  sendBtn.addEventListener('click', () => {
+    const text = userInput.value.trim();
+    if (!text || sendBtn.disabled) return;
+    addMessage(text, 'user');
+    userInput.value = '';
+    sendBtn.disabled = true;
+    userInput.disabled = true;
 
-    sendBtn.addEventListener('click', () => {
-        const text = userInput.value.trim();
-        if (!text || sendBtn.disabled) return;
-        addMessage(text, 'user');
-        userInput.value = '';
-        sendBtn.disabled = true;
-        userInput.disabled = true;
+    showTypingIndicator();
 
-        showTypingIndicator();
+    fetch('https://localhost:7271/api/ia/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, sessionId: 'usuario-chat' })
+    })
+      .then(res => res.json())
+      .then(data => {
+        removeTypingIndicator();
+        addMessage(data.response || 'Desculpe, não entendi sua mensagem.', 'bot');
+      })
+      .catch(() => {
+        removeTypingIndicator();
+        addMessage('Ops! Algo deu errado ao falar com o assistente. 😢', 'bot');
+      })
+      .finally(() => {
+        sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
+      });
+  });
 
-        fetch('https://localhost:7271/api/ia/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                message: text,
-                sessionId: 'usuario-chat'
-            })
-        })
-            .then(res => res.json())
-            .then(data => {
-                removeTypingIndicator();
-                addMessage(data.response || 'Desculpe, não entendi sua mensagem.', 'bot');
-            })
-            .catch(() => {
-                removeTypingIndicator();
-                addMessage('Ops! Algo deu errado ao falar com o assistente. 😢', 'bot');
-            })
-            .finally(() => {
-                sendBtn.disabled = false;
-                userInput.disabled = false;
-                userInput.focus();
-            });
-    });
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendBtn.click();
+  });
 
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendBtn.click();
-    });
+  function fecharModalSaida() {
+    modalConfirm.style.display = 'none';
+  }
 
-    function abrirModalSaida() {
-        modalConfirm.style.display = 'flex';
-    }
+  // ✅ Corrigido: limpar storage ao confirmar saída
+  btnConfirmarSair.addEventListener('click', () => {
+    sessionStorage.removeItem('tecnicoLogado');
+    window.location.href = 'home.html';
+  });
 
-    function fecharModalSaida() {
-        modalConfirm.style.display = 'none';
-    }
+  btnCancelarSair.addEventListener('click', fecharModalSaida);
 
-    btnConfirmarSair.addEventListener('click', () => {
-        window.location.href = 'home.html';
-    });
+  window.addEventListener('click', (e) => {
+    if (e.target === modalConfirm) fecharModalSaida();
+  });
 
-    btnCancelarSair.addEventListener('click', fecharModalSaida);
-
-    // fecha se clicar fora do modal
-    window.addEventListener('click', (e) => {
-        if (e.target === modalConfirm) fecharModalSaida();
-    });
-
-  // ===== Inicializar =====
   fetchChamados();
 });
