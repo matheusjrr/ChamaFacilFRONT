@@ -134,114 +134,148 @@
                 <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
             </footer>
 
-            <script>
-                const form = document.querySelector('.perfil-form');
-                const chatToggle = document.getElementById('chatToggle');
-                const chatModal = document.getElementById('chatModal');
-                const closeChat = document.getElementById('closeChat');
-                const chatBox = document.getElementById('chatBox');
-                const userInput = document.getElementById('userInput');
-                const sendBtn = document.getElementById('sendBtn');
-                const modalConfirm = document.getElementById('modalConfirm');
-                const btnConfirmarSair = document.getElementById('btnConfirmarSair');
-                const btnCancelarSair = document.getElementById('btnCancelarSair');
+<script>
+    const form = document.querySelector('.perfil-form');
+    const chatToggle = document.getElementById('chatToggle');
+    const chatModal = document.getElementById('chatModal');
+    const closeChat = document.getElementById('closeChat');
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const btnConfirmarSair = document.getElementById('btnConfirmarSair');
+    const btnCancelarSair = document.getElementById('btnCancelarSair');
 
-                form.addEventListener('submit', e => {
-                    e.preventDefault();
-                    alert('Alterações salvas com sucesso!');
-                });
+    // ===== Carregar dados do usuário OU técnico logado =====
+    document.addEventListener('DOMContentLoaded', () => {
+        const usuarioLogado = JSON.parse(sessionStorage.getItem('usuarioLogado'));
+        const tecnicoLogado = JSON.parse(sessionStorage.getItem('tecnicoLogado'));
 
-                chatToggle.addEventListener('click', () => {
-                    chatModal.classList.toggle('hidden');
-                });
+        const perfilAtivo = tecnicoLogado || usuarioLogado;
 
-                closeChat.addEventListener('click', () => {
-                    chatModal.classList.add('hidden');
-                });
+        if (!perfilAtivo) {
+            alert('Sessão expirada. Faça login novamente.');
+            window.location.href = 'home.html';
+            return;
+        }
 
-                function addMessage(text, sender) {
-                    const msg = document.createElement('div');
-                    msg.className = 'msg flex items-end gap-2';
-                    msg.innerHTML = sender === 'user'
-                        ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
-                        : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
-                           <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
-                    chatBox.appendChild(msg);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }
+        // 🧩 Exibe o nome do usuário/técnico logado
+        const nomeInput = document.querySelector('.perfil-form input[type="text"]');
+        nomeInput.value = perfilAtivo.nome || 'Usuário';
 
-                function showTypingIndicator() {
-                    const typingDiv = document.createElement('div');
-                    typingDiv.id = 'typingIndicator';
-                    typingDiv.className = 'msg flex items-end gap-2';
-                    typingDiv.innerHTML = `
-                        <img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
-                        <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
-                    chatBox.appendChild(typingDiv);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }
+        // 🧩 Exibe o e-mail, se existir
+        const emailInput = document.querySelector('.perfil-form input[type="email"]');
+        if (perfilAtivo.email) {
+            emailInput.value = perfilAtivo.email;
+        } else {
+            emailInput.value = '';
+            emailInput.placeholder = 'E-mail não informado';
+        }
+    });
 
-                function removeTypingIndicator() {
-                    const typingDiv = document.getElementById('typingIndicator');
-                    if (typingDiv) typingDiv.remove();
-                }
+    // ===== Salvar alterações =====
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        alert('Alterações salvas com sucesso!');
+    });
 
-                sendBtn.addEventListener('click', () => {
-                    const text = userInput.value.trim();
-                    if (!text || sendBtn.disabled) return;
-                    addMessage(text, 'user');
-                    userInput.value = '';
-                    sendBtn.disabled = true;
-                    userInput.disabled = true;
+    // ===== Chat =====
+    chatToggle.addEventListener('click', () => {
+        chatModal.classList.toggle('hidden');
+    });
 
-                    showTypingIndicator();
+    closeChat.addEventListener('click', () => {
+        chatModal.classList.add('hidden');
+    });
 
-                    fetch('https://localhost:7271/api/ia/chat', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            message: text,
-                            sessionId: 'usuario-chat'
-                        })
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            removeTypingIndicator();
-                            addMessage(data.response || 'Desculpe, não entendi sua mensagem.', 'bot');
-                        })
-                        .catch(() => {
-                            removeTypingIndicator();
-                            addMessage('Ops! Algo deu errado ao falar com o assistente. 😢', 'bot');
-                        })
-                        .finally(() => {
-                            sendBtn.disabled = false;
-                            userInput.disabled = false;
-                            userInput.focus();
-                        });
-                });
+    function addMessage(text, sender) {
+        const msg = document.createElement('div');
+        msg.className = 'msg flex items-end gap-2';
+        msg.innerHTML = sender === 'user'
+            ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
+            : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
+               <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-                userInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') sendBtn.click();
-                });
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.id = 'typingIndicator';
+        typingDiv.className = 'msg flex items-end gap-2';
+        typingDiv.innerHTML = `
+            <img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
+            <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
+        chatBox.appendChild(typingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-                function abrirModalSaida() {
-                    modalConfirm.style.display = 'flex';
-                }
+    function removeTypingIndicator() {
+        const typingDiv = document.getElementById('typingIndicator');
+        if (typingDiv) typingDiv.remove();
+    }
 
-                function fecharModalSaida() {
-                    modalConfirm.style.display = 'none';
-                }
+    sendBtn.addEventListener('click', () => {
+        const text = userInput.value.trim();
+        if (!text || sendBtn.disabled) return;
+        addMessage(text, 'user');
+        userInput.value = '';
+        sendBtn.disabled = true;
+        userInput.disabled = true;
 
-                btnConfirmarSair.addEventListener('click', () => {
-                    window.location.href = 'home.html';
-                });
+        showTypingIndicator();
 
-                btnCancelarSair.addEventListener('click', fecharModalSaida);
+        fetch('https://localhost:7271/api/ia/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: text,
+                sessionId: 'usuario-chat'
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                removeTypingIndicator();
+                addMessage(data.response || 'Desculpe, não entendi sua mensagem.', 'bot');
+            })
+            .catch(() => {
+                removeTypingIndicator();
+                addMessage('Ops! Algo deu errado ao falar com o assistente. 😢', 'bot');
+            })
+            .finally(() => {
+                sendBtn.disabled = false;
+                userInput.disabled = false;
+                userInput.focus();
+            });
+    });
 
-                // fecha se clicar fora do modal
-                window.addEventListener('click', (e) => {
-                    if (e.target === modalConfirm) fecharModalSaida();
-                });
-            </script>
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendBtn.click();
+    });
+
+    // ===== Modal de saída =====
+    function abrirModalSaida() {
+        modalConfirm.style.display = 'flex';
+    }
+
+    function fecharModalSaida() {
+        modalConfirm.style.display = 'none';
+    }
+
+    btnConfirmarSair.addEventListener('click', () => {
+        // 🔒 Limpa dados da sessão (usuário e técnico)
+        sessionStorage.removeItem('usuarioLogado');
+        sessionStorage.removeItem('tecnicoLogado');
+        window.location.href = 'home.html';
+    });
+
+    btnCancelarSair.addEventListener('click', fecharModalSaida);
+
+    // Fecha se clicar fora do modal
+    window.addEventListener('click', (e) => {
+        if (e.target === modalConfirm) fecharModalSaida();
+    });
+</script>
+
 </body>
 </html>

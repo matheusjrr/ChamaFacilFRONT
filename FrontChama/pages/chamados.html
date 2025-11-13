@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Chamados</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Fontes e ícones -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- CSS -->
     <link rel="stylesheet" href="chamados.css" />
 </head>
 <body>
@@ -30,6 +28,7 @@
 
             <div class="profile-area" title="Perfil">
                 <i class="fa-solid fa-user-circle"></i>
+                <span id="tecnicoNome" class="ml-2 font-semibold"></span>
             </div>
         </div>
     </header>
@@ -42,7 +41,7 @@
                 <li class="active"><a href="chamados.html"><i class="fa-solid fa-headset"></i> Chamados</a></li>
                 <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
                 <li>
-                    <a href="#" onclick="abrirModalSaida()">
+                    <a href="#" id="btnAbrirModalSaida">
                         <i class="fa-solid fa-clipboard-list"></i> Sair
                     </a>
                 </li>
@@ -122,23 +121,19 @@
                     <p><strong>Categoria:</strong> <span id="modal-categoria"></span></p>
                     <p><strong>Status:</strong> <span id="modal-status"></span></p>
                     <p><strong>Descrição:</strong> <span id="modal-descricao"></span></p>
+                    <div class="modal-footer">
+                        <button id="btnFecharModal" class="btn-fechar">Fechar</button>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- botão e chat flutuante do Zé Help -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- botão e chat flutuante -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <button id="chatToggle" class="fixed bottom-6 right-6 bg-[#3B82F6] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-[#1E40AF] transition z-50">💬</button>
 
-    <!-- botão flutuante -->
-    <button id="chatToggle" class="fixed bottom-6 right-6 bg-[#3B82F6] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-[#1E40AF] transition z-50">
-        💬
-    </button>
-
-    <!-- modal do chat -->
     <div id="chatModal" class="hidden fixed bottom-20 right-6 w-[380px] max-w-[90%] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-200 z-50">
-        <!-- header -->
         <header class="flex items-center justify-between bg-[#2F374C] text-white p-3">
             <div class="flex items-center gap-3">
                 <img src="assets/zehelp.png" class="w-9 h-9 rounded-full bg-white p-1" alt="Zé Help">
@@ -149,69 +144,66 @@
             </div>
             <button id="closeChat" class="text-lg font-bold hover:text-red-400 transition">×</button>
         </header>
-
-        <!-- mensagens -->
         <main id="chatBox" class="flex-1 p-3 overflow-y-auto bg-gray-50 space-y-3">
             <div class="msg flex items-end gap-2">
                 <img src="assets/zehelp.png" class="w-7 h-7 rounded-full" alt="Zé Help">
-                <div class="bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm">
-                    Oi! Sou o Zé Help 😄 Como posso te ajudar hoje?
-                </div>
+                <div class="bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm">Oi! Sou o Zé Help 😄 Como posso te ajudar hoje?</div>
             </div>
         </main>
-
-        <!-- input -->
         <div class="flex items-center gap-2 border-t border-gray-200 p-2 bg-white">
-            <input id="userInput" type="text" placeholder="Digite sua mensagem..."
-                   class="flex-1 border border-gray-300 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]">
+            <input id="userInput" type="text" placeholder="Digite sua mensagem..." class="flex-1 border border-gray-300 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]">
             <button id="sendBtn" class="bg-[#3B82F6] text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#1E40AF] transition">Enviar</button>
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMAÇÃO DE SAÍDA -->
+    <!-- MODAL DE SAÍDA -->
     <div id="modalConfirm" class="modal">
         <div class="modal-content text-center">
             <h2 class="text-lg font-semibold mb-4 text-gray-800">Tem certeza que deseja sair?</h2>
             <div class="flex justify-center gap-4">
-                <button id="btnConfirmarSair" class="bg-[var(--error)] text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Sair</button>
+                <button id="btnConfirmarSair" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Sair</button>
                 <button id="btnCancelarSair" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition">Cancelar</button>
             </div>
         </div>
     </div>
 
-
     <footer class="site-footer">
-        <div>©️ 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+        <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
     </footer>
 
     <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tecnico = JSON.parse(sessionStorage.getItem('tecnicoLogado'));
+        const tecnicoNome = document.getElementById('tecnicoNome');
+        if (tecnico && tecnico.nome) tecnicoNome.textContent = `Olá, ${tecnico.nome}!`;
+
         const navButtons = document.querySelectorAll('.nav-btn');
         const sections = document.querySelectorAll('.chamado-section');
+        const modal = document.getElementById('modal');
+        const closeModal = document.querySelector('.close');
+        const btnFecharModal = document.getElementById('btnFecharModal');
         const modalConfirm = document.getElementById('modalConfirm');
         const btnConfirmarSair = document.getElementById('btnConfirmarSair');
         const btnCancelarSair = document.getElementById('btnCancelarSair');
+        const btnAbrirModalSaida = document.getElementById('btnAbrirModalSaida');
         let chamados = [];
 
-        const categoriasMap = {
-            2: 'TI',
-            3: 'Equipamento',
-            4: 'Infraestrutura'
-        };
+        const categoriasMap = { 2: 'TI', 3: 'Equipamento', 4: 'Infraestrutura' };
 
         navButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 navButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 const sectionId = btn.getAttribute('data-section');
-
                 sections.forEach(sec => sec.classList.remove('active'));
                 document.getElementById(sectionId).classList.add('active');
-
-                if (sectionId === 'pendentes' || sectionId === 'concluidos') {
-                    fetchChamados(sectionId);
-                }
+                if (sectionId !== 'novo-chamado') fetchChamados(sectionId);
             });
         });
+
+        closeModal.addEventListener('click', () => modal.style.display = 'none');
+        btnFecharModal.addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
 
         const chatToggle = document.getElementById('chatToggle');
         const chatModal = document.getElementById('chatModal');
@@ -219,26 +211,16 @@
         const chatBox = document.getElementById('chatBox');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
-        const modal = document.getElementById('modal');
-        const closeModal = document.querySelector('.close');
-        closeModal.addEventListener('click', () => modal.style.display = 'none');
-        window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
 
-        chatToggle.addEventListener('click', () => {
-            chatModal.classList.toggle('hidden');
-        });
-
-        closeChat.addEventListener('click', () => {
-            chatModal.classList.add('hidden');
-        });
+        chatToggle.addEventListener('click', () => chatModal.classList.toggle('hidden'));
+        closeChat.addEventListener('click', () => chatModal.classList.add('hidden'));
 
         function addMessage(text, sender) {
             const msg = document.createElement('div');
             msg.className = 'msg flex items-end gap-2';
             msg.innerHTML = sender === 'user'
                 ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
-                : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
-                               <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
+                : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'><div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
             chatBox.appendChild(msg);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
@@ -247,9 +229,7 @@
             const typingDiv = document.createElement('div');
             typingDiv.id = 'typingIndicator';
             typingDiv.className = 'msg flex items-end gap-2';
-            typingDiv.innerHTML = `
-                            <img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
-                            <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
+            typingDiv.innerHTML = `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'><div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
             chatBox.appendChild(typingDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
@@ -261,176 +241,107 @@
 
         sendBtn.addEventListener('click', () => {
             const text = userInput.value.trim();
-            if (!text || sendBtn.disabled) return;
+            if (!text) return;
             addMessage(text, 'user');
             userInput.value = '';
-            sendBtn.disabled = true;
-            userInput.disabled = true;
-
             showTypingIndicator();
 
             fetch('https://localhost:7271/api/ia/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    message: text,
-                    sessionId: 'usuario-chat'
-                })
+                body: JSON.stringify({ message: text, sessionId: 'usuario-chat' })
             })
-                .then(res => {
-                    if (!res.ok) throw new Error('Erro na resposta da API');
-                    return res.json();
-                })
+                .then(r => r.json())
                 .then(data => {
                     removeTypingIndicator();
-                    addMessage(data.response || 'Desculpe, não entendi sua mensagem.', 'bot');
+                    addMessage(data.response || 'Desculpe, não entendi.', 'bot');
                 })
                 .catch(() => {
                     removeTypingIndicator();
-                    addMessage('Ops! Algo deu errado ao falar com o assistente. 😢', 'bot');
-                })
-                .finally(() => {
-                    sendBtn.disabled = false;
-                    userInput.disabled = false;
-                    userInput.focus();
+                    addMessage('Erro ao conectar com o servidor.', 'bot');
                 });
         });
 
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendBtn.click();
-        });
+        userInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendBtn.click(); });
 
         const form = document.getElementById('form-chamado');
-        const categoriaInput = document.querySelector('.input-select-categoria');
-        const descricaoInput = document.querySelector('.input-descricao-categoria');
-
         form.addEventListener('submit', e => {
             e.preventDefault();
+            const categoria = document.querySelector('.input-select-categoria').value;
+            const descricao = document.querySelector('.input-descricao-categoria').value;
+            if (!categoria || !descricao) return alert('Preencha todos os campos.');
 
-            if (!descricaoInput.value || !categoriaInput.value) {
-                alert("Preencha todos os campos.");
-                return;
-            }
-
-            const bodyRequest = {
-                descricao: descricaoInput.value,
-                numero_chamado: Math.floor(Math.random() * 1000),
-                data_abertura: new Date().toISOString(),
-                status: "Pendente",
-                id_usuario: 1,
-                id_categoria: parseInt(categoriaInput.value)
+            const body = {
+                descricao, numero_chamado: Math.floor(Math.random() * 1000),
+                data_abertura: new Date().toISOString(), status: 'Pendente',
+                id_usuario: tecnico?.id || 1, id_categoria: parseInt(categoria)
             };
 
-            fetch("https://localhost:7271/api/v1/Chamado", {
-                method: "POST",
-                body: JSON.stringify(bodyRequest),
-                headers: { "Content-Type": "application/json" }
-            })
-                .then(response => {
-                    if (!response.ok) throw new Error("Erro na requisição: " + response.status);
-                    return response.json();
-                })
-                .then(() => {
-                    alert("Chamado criado com sucesso!");
-                    form.reset();
-                    fetchChamados('pendentes');
-                })
-                .catch(err => console.error(err));
+            fetch('https://localhost:7271/api/v1/Chamado', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+            }).then(r => {
+                if (!r.ok) throw new Error('Erro');
+                alert('Chamado criado!');
+                form.reset();
+                fetchChamados('pendentes');
+            });
         });
 
         function fetchChamados(sectionId) {
-            fetch("https://localhost:7271/api/v1/Chamado", {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            })
-                .then(response => {
-                    if (!response.ok) throw new Error("Erro na requisição: " + response.status);
-                    return response.json();
-                })
+            fetch('https://localhost:7271/api/v1/Chamado')
+                .then(r => r.json())
                 .then(data => {
                     chamados = data;
                     populateTable(sectionId);
-                })
-                .catch(err => console.error(err));
+                });
         }
 
         function populateTable(sectionId) {
-            const tbody = sectionId === 'pendentes'
-                ? document.querySelector('#pendentes .chamado-tbody')
-                : document.querySelector('#concluidos .chamado-tbody');
-            tbody.innerHTML = "";
-
+            const tbody = document.querySelector(`#${sectionId} .chamado-tbody`);
+            tbody.innerHTML = '';
             const filtered = sectionId === 'pendentes'
-                ? chamados.filter(c => {
-                    const s = c.status.toLowerCase();
-                    return s === 'pendente' || s === 'em-andamento';
-                })
-                : chamados.filter(c => {
-                    const s = c.status.toLowerCase();
-                    return s === 'concluido' || s === 'concluído';
-                });
-
-            filtered.forEach(chamado => {
-                const s = chamado.status.toLowerCase();
+                ? chamados.filter(c => ['pendente', 'em-andamento'].includes(c.status.toLowerCase()))
+                : chamados.filter(c => ['concluido', 'concluído'].includes(c.status.toLowerCase()));
+            filtered.forEach(c => {
+                const s = c.status.toLowerCase();
                 const statusClass = (s === 'pendente' || s === 'em-andamento') ? 'pendente' : 'concluido';
-
-                let displayStatus;
-                if (s === 'em-andamento') displayStatus = 'Em andamento';
-                else if (s === 'concluido' || s === 'concluído') displayStatus = 'Concluído';
-                else displayStatus = chamado.status;
-
+                const displayStatus = s === 'em-andamento' ? 'Em andamento' : (s === 'concluido' || s === 'concluído' ? 'Concluído' : c.status);
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                                <td>#${chamado.id_chamado ?? chamado.numero_chamado}</td>
-                                <td>${categoriasMap[chamado.id_categoria] || chamado.id_categoria}</td>
-                                <td><span class="status ${statusClass}">${displayStatus}</span></td>
-                                <td>${new Date(chamado.data_abertura).toLocaleDateString()}</td>
-                                <td><button class="detalhes-btn btn-chamado">Ver Detalhes</button></td>
-                            `;
+                tr.innerHTML = `<td>#${c.id_chamado ?? c.numero_chamado}</td><td>${categoriasMap[c.id_categoria]}</td><td><span class="status ${statusClass}">${displayStatus}</span></td><td>${new Date(c.data_abertura).toLocaleDateString()}</td><td><button class="detalhes-btn btn-chamado">Ver Detalhes</button></td>`;
                 tbody.appendChild(tr);
-
-                const detalhesBtn = tr.querySelector('.detalhes-btn');
-                detalhesBtn.addEventListener('click', () => showModal(chamado));
+                tr.querySelector('.detalhes-btn').addEventListener('click', () => showModal(c));
             });
         }
 
-        function showModal(chamado) {
-            const s = chamado.status.toLowerCase();
-            let displayStatus;
-            if (s === 'em-andamento') displayStatus = 'Em andamento';
-            else if (s === 'concluido' || s === 'concluído') displayStatus = 'Concluído';
-            else displayStatus = chamado.status;
-
-            document.getElementById('modal-id').textContent = `#${chamado.id_chamado ?? chamado.numero_chamado}`;
-            document.getElementById('modal-categoria').textContent = categoriasMap[chamado.id_categoria] || chamado.id_categoria;
+        function showModal(c) {
+            const s = c.status.toLowerCase();
+            const displayStatus = s === 'em-andamento' ? 'Em andamento' : (s === 'concluido' || s === 'concluído' ? 'Concluído' : c.status);
+            document.getElementById('modal-id').textContent = `#${c.id_chamado ?? c.numero_chamado}`;
+            document.getElementById('modal-categoria').textContent = categoriasMap[c.id_categoria];
             document.getElementById('modal-status').textContent = displayStatus;
-            document.getElementById('modal-descricao').textContent = chamado.descricao;
+            document.getElementById('modal-descricao').textContent = c.descricao;
             modal.style.display = 'flex';
         }
 
-        fetchChamados('pendentes');
+        function abrirModalSaida() { modalConfirm.style.display = 'flex'; }
+        function fecharModalSaida() { modalConfirm.style.display = 'none'; }
 
-        function abrirModalSaida() {
-            modalConfirm.style.display = 'flex';
-        }
-
-        function fecharModalSaida() {
-            modalConfirm.style.display = 'none';
-        }
+        btnAbrirModalSaida.addEventListener('click', e => {
+            e.preventDefault();
+            abrirModalSaida();
+        });
 
         btnConfirmarSair.addEventListener('click', () => {
+            sessionStorage.removeItem('tecnicoLogado');
             window.location.href = 'home.html';
         });
 
         btnCancelarSair.addEventListener('click', fecharModalSaida);
+        window.addEventListener('click', e => { if (e.target === modalConfirm) fecharModalSaida(); });
 
-        // fecha se clicar fora do modal
-        window.addEventListener('click', (e) => {
-            if (e.target === modalConfirm) fecharModalSaida();
-        });
-
+        fetchChamados('pendentes');
+    });
     </script>
-
 
 </body>
 </html>
