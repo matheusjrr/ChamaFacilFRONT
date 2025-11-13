@@ -1,4 +1,11 @@
 @import url('chamados.css');
+:root {
+    --dark: #2F374C;
+    --light: #EDEDED;
+    --white: #FFFFFF;
+    --primary: #6C63FF;
+    --error: #ff4d4d; /* adiciona essa linha aqui */
+}
 
 /* Ajuste do layout principal */
 .layout {
