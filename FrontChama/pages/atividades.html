@@ -41,7 +41,11 @@
                 <li><a href="atividades.html"><i class="fa-solid fa-list-check"></i> Minhas Atividades</a></li>
                 <li><a href="chamados.html"><i class="fa-solid fa-headset"></i> Chamados</a></li>
                 <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
-                <li><a href="home.html"><i class="fa-solid fa-clipboard-list"></i> Sair</a></li>
+                <li>
+                    <a href="#" onclick="abrirModalSaida()">
+                        <i class="fa-solid fa-clipboard-list"></i> Sair
+                    </a>
+                </li>
             </ul>
         </aside>
 
@@ -96,7 +100,7 @@
         <!-- header -->
         <header class="flex items-center justify-between bg-[#2F374C] text-white p-3">
             <div class="flex items-center gap-3">
-                <img src="zedohelp.png" class="w-9 h-9 rounded-full bg-white p-1" alt="Zé Help">
+                <img src="assets/zehelp.png" class="w-9 h-9 rounded-full bg-white p-1" alt="Zé Help">
                 <div>
                     <h1 class="text-sm font-semibold leading-none">Zé Help</h1>
                     <p class="text-xs opacity-80">Ajudante do Chama Fácil</p>
@@ -108,7 +112,7 @@
         <!-- mensagens -->
         <main id="chatBox" class="flex-1 p-3 overflow-y-auto bg-gray-50 space-y-3">
             <div class="msg flex items-end gap-2">
-                <img src="zedohelp.png" class="w-7 h-7 rounded-full" alt="Zé Help">
+                <img src="assets/zehelp.png" class="w-7 h-7 rounded-full" alt="Zé Help">
                 <div class="bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm">
                     Oi! Sou o Zé Help 😄 Como posso te ajudar hoje?
                 </div>
@@ -120,6 +124,17 @@
             <input id="userInput" type="text" placeholder="Digite sua mensagem..."
                    class="flex-1 border border-gray-300 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]">
             <button id="sendBtn" class="bg-[#3B82F6] text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#1E40AF] transition">Enviar</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMAÇÃO DE SAÍDA -->
+    <div id="modalConfirm" class="modal">
+        <div class="modal-content text-center">
+            <h2 class="text-lg font-semibold mb-4 text-gray-800">Tem certeza que deseja sair?</h2>
+            <div class="flex justify-center gap-4">
+                <button id="btnConfirmarSair" class="bg-[var(--error)] text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Sair</button>
+                <button id="btnCancelarSair" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition">Cancelar</button>
+            </div>
         </div>
     </div>
 
@@ -139,6 +154,9 @@
         const chatBox = document.getElementById('chatBox');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
+        const modalConfirm = document.getElementById('modalConfirm');
+        const btnConfirmarSair = document.getElementById('btnConfirmarSair');
+        const btnCancelarSair = document.getElementById('btnCancelarSair');
 
         document.querySelectorAll(".main-nav a").forEach(link => {
             if (link.getAttribute("href") === currentPage) {
@@ -168,8 +186,8 @@
             msg.className = 'msg flex items-end gap-2';
             msg.innerHTML = sender === 'user'
                 ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
-                : `<img src='zedohelp.png' class='w-7 h-7 rounded-full'>
-               <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
+                : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
+                   <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
             chatBox.appendChild(msg);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
@@ -179,8 +197,8 @@
             typingDiv.id = 'typingIndicator';
             typingDiv.className = 'msg flex items-end gap-2';
             typingDiv.innerHTML = `
-            <img src='zedohelp.png' class='w-7 h-7 rounded-full'>
-            <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
+                <img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
+                <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
             chatBox.appendChild(typingDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
@@ -226,6 +244,25 @@
 
         userInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendBtn.click();
+        });
+
+        function abrirModalSaida() {
+            modalConfirm.style.display = 'flex';
+        }
+
+        function fecharModalSaida() {
+            modalConfirm.style.display = 'none';
+        }
+
+        btnConfirmarSair.addEventListener('click', () => {
+            window.location.href = 'home.html';
+        });
+
+        btnCancelarSair.addEventListener('click', fecharModalSaida);
+
+        // fecha se clicar fora do modal
+        window.addEventListener('click', (e) => {
+            if (e.target === modalConfirm) fecharModalSaida();
         });
     </script>
 </body>

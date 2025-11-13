@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBox = document.getElementById('chatBox');
     const userInput = document.getElementById('userInput');
     const sendBtn = document.getElementById('sendBtn');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const btnConfirmarSair = document.getElementById('btnConfirmarSair');
+    const btnCancelarSair = document.getElementById('btnCancelarSair');
+    const btnSair = document.getElementById('btnSair');
+    btnSair.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalConfirm.style.display = 'flex';
+    });
+
 
   let chamados = [];
   let currentFilter = 'pendente';
@@ -204,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msg.className = 'msg flex items-end gap-2';
         msg.innerHTML = sender === 'user'
             ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
-            : `<img src='zedohelp.png' class='w-7 h-7 rounded-full'>
+            : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
                <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
         chatBox.appendChild(msg);
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -215,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         typingDiv.id = 'typingIndicator';
         typingDiv.className = 'msg flex items-end gap-2';
         typingDiv.innerHTML = `
-            <img src='zedohelp.png' class='w-7 h-7 rounded-full'>
+            <img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
             <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
         chatBox.appendChild(typingDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
@@ -262,6 +271,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') sendBtn.click();
+    });
+
+    function abrirModalSaida() {
+        modalConfirm.style.display = 'flex';
+    }
+
+    function fecharModalSaida() {
+        modalConfirm.style.display = 'none';
+    }
+
+    btnConfirmarSair.addEventListener('click', () => {
+        window.location.href = 'home.html';
+    });
+
+    btnCancelarSair.addEventListener('click', fecharModalSaida);
+
+    // fecha se clicar fora do modal
+    window.addEventListener('click', (e) => {
+        if (e.target === modalConfirm) fecharModalSaida();
     });
 
   // ===== Inicializar =====
