@@ -52,21 +52,40 @@
       <h2 class="text-2xl font-semibold text-[#2F374C] mb-6">Crie sua conta</h2>
 
       <form id="cadastroForm" class="flex flex-col items-center w-full">
-        <input type="text" id="nome" placeholder="Digite seu nome completo..." class="input-field" />
+          <!-- Nome -->
+          <div class="w-full mb-2 relative">
+              <input type="text" id="nome" placeholder="Digite seu nome completo..." class="input-field" />
+              <p id="erroNome" class="text-red-500 text-sm mt-1 hidden">Preencha seu nome completo.</p>
+          </div>
 
-        <input type="text" id="funcional" placeholder="Digite sua funcional..." class="input-field" />
-        <input type="email" id="email" placeholder="Digite seu e-mail..." class="input-field" />
-        <input type="password" id="senha" placeholder="Crie uma senha..." class="input-field" />
-        <input type="password" id="confirmarSenha" placeholder="Confirme sua senha..." class="input-field" />
+          <!-- Funcional -->
+          <div class="w-full mb-2 relative">
+              <input type="text" id="funcional" placeholder="Digite sua funcional..." class="input-field" />
+              <p id="erroFuncional" class="text-red-500 text-sm mt-1 hidden">Preencha sua funcional.</p>
+          </div>
 
-        <div class="flex items-center mt-2 mb-5 text-sm text-[#2F374C]">
-          <input type="checkbox" id="termos" class="mr-2 accent-[#2F374C]" />
-          <label for="termos">Concordo com os <a href="termos.html" class="underline font-semibold hover:text-[#57607A]">Termos de Uso</a></label>
-        </div>
+          <!-- Senha -->
+          <div class="w-full mb-2 relative">
+              <input type="password" id="senha" placeholder="Crie uma senha..." class="input-field" />
+              <p id="erroSenha" class="text-red-500 text-sm mt-1 hidden">A senha deve ter pelo menos 6 caracteres.</p>
+          </div>
 
-        <button type="submit" class="bg-[#2F374C] text-white px-10 py-2.5 rounded-full hover:opacity-90 transition-all font-semibold">
-          CADASTRAR
-        </button>
+          <!-- Confirmar Senha -->
+          <div class="w-full mb-2 relative">
+              <input type="password" id="confirmarSenha" placeholder="Confirme sua senha..." class="input-field" />
+              <p id="erroConfirmar" class="text-red-500 text-sm mt-1 hidden">As senhas não conferem.</p>
+          </div>
+
+          <!-- Termos -->
+          <div class="flex items-center mt-2 mb-5 text-sm text-[#2F374C] w-full justify-center">
+              <input type="checkbox" id="termos" class="mr-2 accent-[#2F374C]" />
+              <label for="termos">Concordo com os <a href="termos.html" class="underline font-semibold hover:text-[#57607A]">Termos de Uso</a></label>
+          </div>
+          <p id="erroTermos" class="text-red-500 text-sm mt-1 hidden w-full text-center">Você precisa concordar com os Termos.</p>
+
+          <button type="submit" class="bg-[#2F374C] text-white px-10 py-2.5 rounded-full hover:opacity-90 transition-all font-semibold mt-3">
+              CADASTRAR
+          </button>
       </form>
     </div>
   </div>

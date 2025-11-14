@@ -1,43 +1,83 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('cadastroForm');
+    const btn = form.querySelector('button[type="submit"]');
 
-    // Cria a div de mensagens dinamicamente
-    const mensagemDiv = document.createElement('div');
-    mensagemDiv.className = "w-full mb-4 p-3 text-center rounded font-semibold hidden"; // hidden por padrão
-    form.prepend(mensagemDiv); // adiciona acima do formulário
+    // Elementos
+    const nomeInput = document.getElementById('nome');
+    const funcionalInput = document.getElementById('funcional');
+    const senhaInput = document.getElementById('senha');
+    const confirmarInput = document.getElementById('confirmarSenha');
+    const termosInput = document.getElementById('termos');
 
-    const mostrarMensagem = (msg, tipo = "erro") => {
-        mensagemDiv.textContent = msg;
-        mensagemDiv.classList.remove("hidden", "bg-red-500", "bg-green-500", "text-white");
-        if (tipo === "erro") {
-            mensagemDiv.classList.add("bg-red-500", "text-white");
-        } else if (tipo === "sucesso") {
-            mensagemDiv.classList.add("bg-green-500", "text-white");
-        }
+    const erroNome = document.getElementById('erroNome');
+    const erroFuncional = document.getElementById('erroFuncional');
+    const erroSenha = document.getElementById('erroSenha');
+    const erroConfirmar = document.getElementById('erroConfirmar');
+    const erroTermos = document.getElementById('erroTermos');
+
+    // Reset de erros
+    const resetErros = () => {
+        [nomeInput, funcionalInput, senhaInput, confirmarInput].forEach(input => {
+            input.classList.remove('input-error');
+            input.classList.add('input-normal');
+        });
+        [erroNome, erroFuncional, erroSenha, erroConfirmar, erroTermos].forEach(el => {
+            el.classList.add('hidden');
+        });
     };
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        resetErros();
+        let temErro = false;
 
-        const nome = document.getElementById('nome').value.trim();
-        const funcional = document.getElementById('funcional').value.trim();
-        const senha = document.getElementById('senha').value.trim();
-        const confirmarSenha = document.getElementById('confirmarSenha').value.trim();
-        const termos = document.getElementById('termos').checked;
+        const nome = nomeInput.value.trim();
+        const funcional = funcionalInput.value.trim();
+        const senha = senhaInput.value;
+        const confirmar = confirmarInput.value;
+        const termos = termosInput.checked;
 
-        // Validações
-        if (!nome) return mostrarMensagem("Preencha seu nome completo.");
-        if (!funcional) return mostrarMensagem("Preencha sua funcional.");
-        if (senha.length < 6) return mostrarMensagem("A senha deve ter pelo menos 6 caracteres.");
-        if (senha !== confirmarSenha) return mostrarMensagem("As senhas não conferem.");
-        if (!termos) return mostrarMensagem("Você precisa concordar com os Termos de Uso.");
+        // Validações com feedback visual
+        if (!nome) {
+            nomeInput.classList.add('input-error');
+            erroNome.classList.remove('hidden');
+            temErro = true;
+        }
+
+        if (!funcional) {
+            funcionalInput.classList.add('input-error');
+            erroFuncional.classList.remove('hidden');
+            temErro = true;
+        }
+
+        if (senha.length < 6) {
+            senhaInput.classList.add('input-error');
+            erroSenha.classList.remove('hidden');
+            temErro = true;
+        }
+
+        if (senha !== confirmar) {
+            confirmarInput.classList.add('input-error');
+            erroConfirmar.classList.remove('hidden');
+            temErro = true;
+        }
+
+        if (!termos) {
+            erroTermos.classList.remove('hidden');
+            temErro = true;
+        }
+
+        if (temErro) return;
+
+        // Desabilita botão
+        btn.disabled = true;
+        btn.textContent = 'Cadastrando...';
+        btn.classList.add('opacity-60', 'cursor-not-allowed');
 
         try {
             const response = await fetch("https://localhost:7271/api/v1/Usuario", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     Nome_usuario: nome,
                     Funcional: funcional,
@@ -47,18 +87,28 @@
 
             if (!response.ok) {
                 const errorText = await response.text();
-                throw new Error(errorText || "Erro ao cadastrar usuário.");
+                throw new Error(errorText || "Erro ao cadastrar.");
             }
 
-            mostrarMensagem("Cadastro realizado com sucesso!", "sucesso");
+            // Sucesso
+            btn.textContent = 'Sucesso!';
+            btn.classList.remove('opacity-60', 'cursor-not-allowed');
+            btn.classList.add('bg-green-600');
 
-            // Redireciona após 1.5s para o FAQ
             setTimeout(() => {
                 window.location.href = "faq.html";
-            }, 1500);
+            }, 1200);
 
         } catch (error) {
-            mostrarMensagem("Erro: " + error.message);
+            alert("Erro: " + error.message); // ou use um toast
+            btn.disabled = false;
+            btn.textContent = 'CADASTRAR';
+            btn.classList.remove('opacity-60', 'cursor-not-allowed');
         }
+    });
+
+    // Adiciona classe normal aos inputs
+    [nomeInput, funcionalInput, senhaInput, confirmarInput].forEach(input => {
+        input.classList.add('input-normal');
     });
 });

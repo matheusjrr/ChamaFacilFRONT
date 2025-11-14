@@ -8,11 +8,11 @@
     background-color: #EDEDED;
     padding: 12px;
     border-radius: 6px;
-    border: none;
     outline: none;
-    margin-bottom: 18px;
+    margin-bottom: 6px;
     font-size: 14px;
     transition: all 0.2s;
+    border: 1px solid transparent; /* removido border: none */
 }
 
     .input-field:focus {
@@ -35,3 +35,22 @@
         transform: translateY(0);
     }
 }
+
+/* Estilo de erro nos inputs */
+.input-error {
+    border: 2px solid #e53935 !important;
+    background-color: #ffebee !important;
+    box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+}
+
+/* Input normal (opcional, para consistência) */
+.input-normal {
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+    .input-normal:focus {
+        background-color: #fff;
+        box-shadow: 0 0 0 2px #2F374C33;
+        border-color: #2F374C;
+    }

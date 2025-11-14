@@ -58,19 +58,30 @@
 
             <h2 class="text-2xl font-semibold text-[#2F374C] mb-6">Login</h2>
 
-            <input type="text" id="funcional" placeholder="Digite a sua funcional..." class="w-full mb-4 p-3 bg-[#EDEDED] rounded-md outline-none focus:ring-2 focus:ring-[#57607A] transition-all" />
+            <!-- funcional -->
+            <div class="w-full mb-4">
+                <input type="text" id="funcional" placeholder="Digite a sua funcional..."
+                       class="w-full p-3 bg-[#EDEDED] rounded-md outline-none transition-all" />
+                <p id="erroFuncional" class="text-red-500 text-sm mt-1 hidden">Preencha a funcional</p>
+            </div>
+
+            <!-- senha -->
             <div class="relative w-full mb-6">
                 <input type="password" id="senha" placeholder="Digite a sua senha..."
-                       class="w-full p-3 bg-[#EDEDED] rounded-md outline-none focus:ring-2 focus:ring-[#57607A] transition-all pr-10" />
-
+                       class="w-full p-3 bg-[#EDEDED] rounded-md outline-none transition-all pr-10" />
                 <button type="button" id="toggleSenha"
                         class="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#2F374C] hidden">
-                    <!--  ícone de olho -->
-                    <svg id="iconSenha" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="#2F374C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg id="iconSenha" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+                         stroke="#2F374C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M1 1l18 18M10 10a3 3 0 0 1 3 3m0 0a3 3 0 0 1-3 3m0 0a3 3 0 0 1-3-3m0 0a3 3 0 0 1 3-3" />
                     </svg>
                 </button>
+                <p id="erroSenha" class="text-red-500 text-sm mt-1 hidden">Preencha a senha</p>
             </div>
+
+            <p id="erroGeral" class="text-red-600 font-semibold text-center my-3 hidden">
+                funcional ou senha incorretos
+            </p>
 
             <button id="btnEntrar"
                     class="bg-[#2F374C] text-white px-10 py-2.5 rounded-full hover:opacity-90 transition-all">
