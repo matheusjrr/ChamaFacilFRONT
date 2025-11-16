@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chamados</title>
+
+    <!-- Ícone -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+
+    <!-- Fontes e Ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS correto -->
+    <link rel="stylesheet" href="../css/chamados.css" />
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="logo-wrapper">
+                    <img src="../assets/logo.png" alt="Logo Chama Fácil" class="brand-logo">
+                </div>
+                <span class="brand-title">Chama Fácil</span>
+            </div>
+
+            <!-- Menu superior -->
+            <nav class="main-nav" aria-label="Menu principal">
+                <a class="nav-link active" href="faq.html">Central de Soluções</a>
+                <a class="nav-link" href="artigos.html">Artigos & Documentos</a>
+            </nav>
+
+            <!-- Perfil -->
+            <div class="profile-area" title="Perfil">
+                <i class="fa-solid fa-user-circle"></i>
+                <span id="tecnicoNome" class="ml-2 font-semibold"></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="atividades.html" class="link-aviso"><i class="fa-solid fa-list-check"></i> Minhas Atividades</a></li>
+                <li class="active"><a href="chamados.html" class="link-aviso"><i class="fa-solid fa-headset"></i> Chamados</a></li>
+                <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+                <li>
+                    <a href="#" id="btnAbrirModalSaida">
+                        <i class="fa-solid fa-clipboard-list"></i> Sair
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="page">
+            <h1 class="hero-title">Central de Chamados</h1>
+
+            <!-- Seletor de seções -->
+            <div class="search-area">
+                <button class="nav-btn active" data-section="novo-chamado">+ Novo Chamado</button>
+                <button class="nav-btn" data-section="pendentes">Pendentes</button>
+                <button class="nav-btn" data-section="concluidos">Concluídos</button>
+            </div>
+
+            <!-- SEÇÃO: Novo Chamado -->
+            <section id="novo-chamado" class="chamado-section faq-section active">
+                <h2>Abrir Novo Chamado</h2>
+                <form id="form-chamado" class="card">
+                    <label>Categoria:</label>
+                    <select class="input-select-categoria" required>
+                        <option value="">Selecione...</option>
+                        <option value="2">TI</option>
+                        <option value="3">Equipamento</option>
+                        <option value="4">Infraestrutura</option>
+                    </select>
+
+                    <label>Descrição:</label>
+                    <textarea class="input-descricao-categoria" placeholder="Descreva o problema..." required></textarea>
+
+                    <button type="submit" class="btn-chamado">Enviar Chamado</button>
+                </form>
+            </section>
+
+            <!-- SEÇÃO: Chamados Pendentes -->
+            <section id="pendentes" class="chamado-section faq-section">
+                <h2>Chamados Pendentes</h2>
+                <table class="faq-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody class="chamado-tbody"></tbody>
+                </table>
+            </section>
+
+            <!-- SEÇÃO: Chamados Concluídos -->
+            <section id="concluidos" class="chamado-section faq-section">
+                <h2>Chamados Concluídos</h2>
+                <table class="faq-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody class="chamado-tbody"></tbody>
+                </table>
+            </section>
+
+            <!-- Modal -->
+            <div class="modal" id="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Detalhes do Chamado</h3>
+                    <p><strong>ID:</strong> <span id="modal-id"></span></p>
+                    <p><strong>Categoria:</strong> <span id="modal-categoria"></span></p>
+                    <p><strong>Status:</strong> <span id="modal-status"></span></p>
+                    <p><strong>Descrição:</strong> <span id="modal-descricao"></span></p>
+                    <div class="modal-footer">
+                        <button id="btnFecharModal" class="btn-fechar">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- botão e chat flutuante -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <button id="chatToggle" class="fixed bottom-6 right-6 bg-[#3B82F6] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-[#1E40AF] transition z-50">💬</button>
+
+    <div id="chatModal" class="hidden fixed bottom-20 right-6 w-[380px] max-w-[90%] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-200 z-50">
+        <header class="flex items-center justify-between bg-[#2F374C] text-white p-3">
+            <div class="flex items-center gap-3">
+                <img src="../assets/zehelp.png" class="w-9 h-9 rounded-full bg-white p-1" alt="Zé Help">
+                <div>
+                    <h1 class="text-sm font-semibold leading-none">Zé Help</h1>
+                    <p class="text-xs opacity-80">Ajudante do Chama Fácil</p>
+                </div>
+            </div>
+            <button id="closeChat" class="text-lg font-bold hover:text-red-400 transition">×</button>
+        </header>
+        <main id="chatBox" class="flex-1 p-3 overflow-y-auto bg-gray-50 space-y-3">
+            <div class="msg flex items-end gap-2">
+                <img src="../assets/zehelp.png" class="w-7 h-7 rounded-full" alt="Zé Help">
+                <div class="bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm">
+                    Oi! Sou o Zé Help 😄 Como posso te ajudar hoje?
+                </div>
+            </div>
+        </main>
+        <div class="flex items-center gap-2 border-t border-gray-200 p-2 bg-white">
+            <input id="userInput" type="text" placeholder="Digite sua mensagem..." class="flex-1 border border-gray-300 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]">
+            <button id="sendBtn" class="bg-[#3B82F6] text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#1E40AF] transition">Enviar</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE SAÍDA -->
+    <div id="modalConfirm" class="modal">
+        <div class="modal-content text-center">
+            <h2 class="text-lg font-semibold mb-4 text-gray-800">Tem certeza que deseja sair?</h2>
+            <div class="flex justify-center gap-4">
+                <button id="btnConfirmarSair" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Sair</button>
+                <button id="btnCancelarSair" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+    </footer>
+
+    <script src="../js/chamados.js"></script>
+
+</body>
+</html>
