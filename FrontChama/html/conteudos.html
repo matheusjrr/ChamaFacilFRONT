@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Conteúdos</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS local -->
+    <link rel="stylesheet" href="../css/conteudos.css" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <div class="logo-wrapper">
+                    <img src="../assets/logo.png" alt="Logo Chama Fácil" class="brand-logo">
+                </div>
+                <span class="brand-title">Chama Fácil</span>
+            </div>
+
+            <!-- Menu superior -->
+            <nav class="main-nav" aria-label="Menu principal">
+                <a class="nav-link" href="../html/faq.html">Central de Soluções</a>
+                <a class="nav-link" href="../html/artigos.html">Artigos & Documentos</a>
+                <a class="nav-link active" href="../html/conteudos.html">Conteúdos</a>
+            </nav>
+
+            <div class="profile-area" title="Perfil">
+                <i class="fa-solid fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- Sidebar Menu Lateral -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="atividades.html"><i class="fa-solid fa-list-check"></i> Minhas Atividades</a></li>
+                <li><a href="chamados.html"><i class="fa-solid fa-headset"></i> Chamados</a></li>
+                <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+                <li>
+                    <a href="#" onclick="abrirModalSaida()">
+                        <i class="fa-solid fa-clipboard-list"></i> Sair
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="page">
+            <h1 class="hero-title">Conteúdos</h1>
+
+            <!-- Seletor de abas -->
+            <div class="search-area">
+                <button class="nav-btn active" data-section="artigos">Artigos</button>
+                <button class="nav-btn" data-section="documentos">Documentos</button>
+            </div>
+
+            <!-- SEÇÃO: Artigos -->
+            <section id="artigos" class="conteudo-section faq-section active">
+                <h2>Artigos</h2>
+                <div class="category-cards">
+                    <a href="#" class="cat-card-link">
+                        <article class="cat-card">
+                            <div class="cat-icon"><i class="fa-solid fa-newspaper"></i></div>
+                            <h3>Guia de Acesso</h3>
+                            <p>Aprenda como acessar o sistema passo a passo.</p>
+                            <div class="card-footer">Leia mais <i class="fa-solid fa-arrow-right"></i></div>
+                        </article>
+                    </a>
+
+                    <a href="#" class="cat-card-link">
+                        <article class="cat-card">
+                            <div class="cat-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                            <h3>Dicas de Produtividade</h3>
+                            <p>Otimize seu trabalho com essas dicas práticas.</p>
+                            <div class="card-footer">Leia mais <i class="fa-solid fa-arrow-right"></i></div>
+                        </article>
+                    </a>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: Documentos -->
+            <section id="documentos" class="conteudo-section faq-section">
+                <h2>Documentos</h2>
+                <div class="category-cards">
+                    <a href="#" class="cat-card-link">
+                        <article class="cat-card">
+                            <div class="cat-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                            <h3>Manual do Usuário</h3>
+                            <p>PDF com todas as instruções para colaboradores.</p>
+                            <div class="card-footer">Baixar <i class="fa-solid fa-arrow-down"></i></div>
+                        </article>
+                    </a>
+
+                    <a href="#" class="cat-card-link">
+                        <article class="cat-card">
+                            <div class="cat-icon"><i class="fa-solid fa-file-alt"></i></div>
+                            <h3>Política Interna</h3>
+                            <p>Documentos com regras e condutas da empresa.</p>
+                            <div class="card-footer">Baixar <i class="fa-solid fa-arrow-down"></i></div>
+                        </article>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- botão flutuante -->
+    <button id="chatToggle" class="fixed bottom-6 right-6 bg-[#3B82F6] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-[#1E40AF] transition z-50">
+        💬
+    </button>
+
+    <!-- modal do chat -->
+    <div id="chatModal" class="hidden fixed bottom-20 right-6 w-[380px] max-w-[90%] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-200 z-50">
+        <!-- header -->
+        <header class="flex items-center justify-between bg-[#2F374C] text-white p-3">
+            <div class="flex items-center gap-3">
+                <img src="../assets/zehelp.png" class="w-9 h-9 rounded-full bg-white p-1" alt="Zé Help">
+                <div>
+                    <h1 class="text-sm font-semibold leading-none">Zé Help</h1>
+                    <p class="text-xs opacity-80">Ajudante do Chama Fácil</p>
+                </div>
+            </div>
+            <button id="closeChat" class="text-lg font-bold hover:text-red-400 transition">×</button>
+        </header>
+
+        <!-- mensagens -->
+        <main id="chatBox" class="flex-1 p-3 overflow-y-auto bg-gray-50 space-y-3">
+            <div class="msg flex items-end gap-2">
+                <img src="../assets/zehelp.png" class="w-7 h-7 rounded-full" alt="Zé Help">
+                <div class="bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm">
+                    Oi! Sou o Zé Help 😄 Como posso te ajudar hoje?
+                </div>
+            </div>
+        </main>
+
+        <!-- input -->
+        <div class="flex items-center gap-2 border-t border-gray-200 p-2 bg-white">
+            <input id="userInput" type="text" placeholder="Digite sua mensagem..."
+                   class="flex-1 border border-gray-300 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]">
+            <button id="sendBtn" class="bg-[#3B82F6] text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#1E40AF] transition">Enviar</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMAÇÃO DE SAÍDA -->
+    <div id="modalConfirm" class="modal">
+        <div class="modal-content text-center">
+            <h2 class="text-lg font-semibold mb-4 text-gray-800">Tem certeza que deseja sair?</h2>
+            <div class="flex justify-center gap-4">
+                <button id="btnConfirmarSair" class="bg-[var(--error)] text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Sair</button>
+                <button id="btnCancelarSair" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="site-footer">
+        <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+    </footer>
+
+<script>
+    // ==================== SELEÇÃO DE ELEMENTOS ==================== //
+    // Seleciona os botões de navegação que alternam entre diferentes seções
+    const navButtons = document.querySelectorAll('.nav-btn');
+    // Seleciona todas as seções de conteúdo correspondentes às abas
+    const sections = document.querySelectorAll('.conteudo-section');
+
+    // Seleciona elementos relacionados ao chat
+    const chatToggle = document.getElementById('chatToggle'); // botão que abre ou fecha o chat
+    const chatModal = document.getElementById('chatModal');   // contêiner do chat
+    const closeChat = document.getElementById('closeChat');   // botão para fechar o chat
+    const chatBox = document.getElementById('chatBox');       // área onde as mensagens são exibidas
+    const userInput = document.getElementById('userInput');   // campo onde o usuário digita
+    const sendBtn = document.getElementById('sendBtn');       // botão que envia a mensagem
+
+    // Seleciona elementos do modal de confirmação de saída
+    const modalConfirm = document.getElementById('modalConfirm'); // contêiner do modal
+    const btnConfirmarSair = document.getElementById('btnConfirmarSair'); // confirma saída
+    const btnCancelarSair = document.getElementById('btnCancelarSair');   // cancela saída
+
+    // ==================== NAVEGAÇÃO ENTRE ABAS ==================== //
+    // Permite alternar entre diferentes seções ao clicar nos botões de navegação
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove a marcação de ativo de todas as abas
+            navButtons.forEach(b => b.classList.remove('active'));
+            // Marca o botão clicado como ativo
+            btn.classList.add('active');
+
+            // Descobre qual seção deve ser exibida com base no botão clicado
+            const sectionId = btn.getAttribute('data-section');
+            // Esconde todas as seções
+            sections.forEach(sec => sec.classList.remove('active'));
+            // Exibe apenas a seção correspondente
+            document.getElementById(sectionId).classList.add('active');
+        });
+    });
+
+    // ==================== ABRIR / FECHAR CHAT ==================== //
+    // Alterna a visibilidade do chat ao clicar no botão correspondente
+    chatToggle.addEventListener('click', () => {
+        chatModal.classList.toggle('hidden');
+    });
+
+    // Fecha o chat ao clicar no botão de fechar
+    closeChat.addEventListener('click', () => {
+        chatModal.classList.add('hidden');
+    });
+
+    // ==================== MENSAGENS ==================== //
+    // Função que adiciona uma mensagem na tela
+    // Recebe o texto da mensagem e o remetente (usuário ou assistente)
+    function addMessage(text, sender) {
+        const msg = document.createElement('div');
+        msg.className = 'msg flex items-end gap-2';
+
+        // Define a aparência da mensagem de acordo com quem enviou
+        msg.innerHTML = sender === 'user'
+            ? `<div class='ml-auto bg-gray-200 text-gray-800 px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`
+            : `<img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
+               <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl max-w-[75%] text-sm'>${text}</div>`;
+
+        // Adiciona a mensagem na área do chat
+        chatBox.appendChild(msg);
+        // Mantém a rolagem no final da conversa
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Exibe um indicador de que o assistente está digitando
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.id = 'typingIndicator';
+        typingDiv.className = 'msg flex items-end gap-2';
+        typingDiv.innerHTML = `
+            <img src='assets/zehelp.png' class='w-7 h-7 rounded-full'>
+            <div class='bg-[#3B82F6] text-white px-3 py-2 rounded-2xl text-sm'>digitando...</div>`;
+        chatBox.appendChild(typingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Remove o indicador de digitação do assistente
+    function removeTypingIndicator() {
+        const typingDiv = document.getElementById('typingIndicator');
+        if (typingDiv) typingDiv.remove();
+    }
+
+    // ==================== ENVIO DE MENSAGEM ==================== //
+    // Envia a mensagem digitada pelo usuário
+    sendBtn.addEventListener('click', () => {
+        const text = userInput.value.trim();
+
+        // Não faz nada se não houver texto ou se o envio estiver bloqueado
+        if (!text || sendBtn.disabled) return;
+
+        // Adiciona a mensagem do usuário na tela imediatamente
+        addMessage(text, 'user');
+        // Limpa o campo de digitação e bloqueia novos envios temporariamente
+        userInput.value = '';
+        sendBtn.disabled = true;
+        userInput.disabled = true;
+
+        // Mostra que o assistente está processando a mensagem
+        showTypingIndicator();
+
+        // Envia os dados da mensagem para o assistente e aguarda resposta
+        fetch('https://localhost:7271/api/ia/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: text,
+                sessionId: 'usuario-chat'
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Remove o indicador de digitação e exibe a resposta do assistente
+            removeTypingIndicator();
+            addMessage(data.response || 'Desculpe, não entendi sua mensagem.', 'bot');
+        })
+        .catch(() => {
+            // Caso ocorra erro na comunicação, mostra mensagem de falha
+            removeTypingIndicator();
+            addMessage('Ops! Algo deu errado ao falar com o assistente. 😢', 'bot');
+        })
+        .finally(() => {
+            // Reativa o envio e mantém foco no campo de texto
+            sendBtn.disabled = false;
+            userInput.disabled = false;
+            userInput.focus();
+        });
+    });
+
+    // Permite enviar a mensagem ao pressionar Enter
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendBtn.click();
+    });
+
+    // ==================== MODAL DE CONFIRMAÇÃO DE SAÍDA ==================== //
+    // Abre a tela de confirmação de saída
+    function abrirModalSaida() {
+        modalConfirm.style.display = 'flex';
+    }
+
+    // Fecha a tela de confirmação de saída
+    function fecharModalSaida() {
+        modalConfirm.style.display = 'none';
+    }
+
+    // Confirma que o usuário deseja sair e redireciona
+    btnConfirmarSair.addEventListener('click', () => {
+        window.location.href = 'home.html';
+    });
+
+    // Cancela a saída e fecha o modal
+    btnCancelarSair.addEventListener('click', fecharModalSaida);
+
+    // Fecha o modal se o usuário clicar fora da área principal
+    window.addEventListener('click', (e) => {
+        if (e.target === modalConfirm) fecharModalSaida();
+    });
+</script>
+
+</body>
+</html>

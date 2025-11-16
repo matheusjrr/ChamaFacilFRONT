@@ -1,0 +1,124 @@
+@import url('chamados.css');
+
+:root {
+    --dark: #2F374C;
+    --light: #EDEDED;
+    --white: #FFFFFF;
+    --primary: #6C63FF;
+    --error: #ff4d4d; /* adiciona essa linha aqui */
+}
+
+.perfil-card {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.foto-perfil {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+}
+
+.perfil-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+    .perfil-form label {
+        font-weight: 600;
+    }
+
+    .perfil-form input,
+    .perfil-form select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: var(--radius);
+        font-family: 'Poppins', sans-serif;
+    }
+
+        .perfil-form input:focus,
+        .perfil-form select:focus {
+            outline: 2px solid var(--primary);
+        }
+
+.btn-chamado {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .btn-chamado:hover {
+        background: #384a83;
+    }
+
+/* ===== CHATBOT ===== */
+#chatBox {
+    max-height: 500px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.msg {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === estilo do modal de confirmação de saída === */
+.modal {
+    display: none; /* começa escondido */
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
