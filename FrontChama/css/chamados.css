@@ -328,23 +328,25 @@ header.site-header {
     margin-top: 15px;
 }
 
-/* ===== BOTÃO FECHAR ===== */
+/* ===== BOTÃO FECHAR/CANCELAR ===== */
 .btn-fechar {
     display: inline-block;
-    background-color: var(--error);
-    color: #fff;
+    background-color: var(--muted); 
+    color: #fff; 
     border: none;
     border-radius: var(--radius);
-    padding: 10px 20px;
+    padding: 12px 25px; 
+    font-size: 1rem; 
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-fechar:hover {
-    background-color: #dc2626;
+    background-color: #4b5563; 
     transform: scale(1.03);
 }
+
 
 /* ===== CHAT ===== */
 #chatBox {
