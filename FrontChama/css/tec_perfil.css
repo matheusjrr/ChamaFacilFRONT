@@ -1,81 +1,147 @@
+/* Importa estilos globais */
 @import url('chamados.css');
 
+/* Vari√°veis principais */
 :root {
     --dark: #2F374C;
     --light: #EDEDED;
+    --muted: #6b7280;
     --white: #FFFFFF;
-    --primary: #6C63FF;
-    --error: #ff4d4d; /* adiciona essa linha aqui */
+    --primary: #3B82F6;
+    --error: #ff4d4d;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+/* ===========================
+   HEADER 
+=========================== */
+
+.profile-area {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.profile-area i {
+    color: var(--dark); 
+    font-size: 16px;
+}
+
+/* ===========================
+   T√çTULO CENTRALIZADO
+=========================== */
+
+.hero-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: var(--dark);
+}
+
+/* ===========================
+   CARD DE PERFIL
+=========================== */
 
 .perfil-card {
     background: #fff;
     border-radius: var(--radius);
-    padding: 30px;
+    padding: 40px 40px 50px;
     box-shadow: var(--shadow);
     display: flex;
-    align-items: flex-start;
-    gap: 30px;
-    max-width: 700px;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    max-width: 600px;
     margin: 0 auto;
 }
 
+/* ---------------------------
+   √çCONE MAIOR DO PERFIL
+--------------------------- */
 .foto-perfil {
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
-    object-fit: cover;
+    background: #e6ebf5;
     border: 3px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.foto-perfil i {
+    font-size: 55px;
+    color: var(--dark);
+}
+
+/* ===========================
+   FORM
+=========================== */
+
 .perfil-form {
-    flex: 1;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    text-align: left;
 }
 
-    .perfil-form label {
-        font-weight: 600;
-    }
+.perfil-form label {
+    font-weight: 600;
+}
 
-    .perfil-form input,
-    .perfil-form select {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: var(--radius);
-        font-family: 'Poppins', sans-serif;
-    }
+.perfil-form input,
+.perfil-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+    font-family: 'Poppins', sans-serif;
+}
 
-        .perfil-form input:focus,
-        .perfil-form select:focus {
-            outline: 2px solid var(--primary);
-        }
+.perfil-form input:focus,
+.perfil-form select:focus {
+    outline: 2px solid var(--primary);
+}
+
+/* ===========================
+   Bot√£o
+=========================== */
 
 .btn-chamado {
     background: var(--primary);
     color: #fff;
     border: none;
     border-radius: var(--radius);
-    padding: 10px 16px;
+    padding: 12px 18px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.3s;
 }
 
-    .btn-chamado:hover {
-        background: #384a83;
-    }
+.btn-chamado:hover {
+    background: #384a83;
+}
 
-/* ===== CHATBOT ===== */
+.btn-chamado:hover {
+    background: #384a83;
+}
+
+/* ===========================
+   CHAT
+=========================== */
+
 #chatBox {
     max-height: 500px;
     overflow-y: auto;
     scroll-behavior: smooth;
-}
-
-* {
-    font-family: 'Poppins', sans-serif;
 }
 
 .msg {
@@ -87,16 +153,18 @@
         opacity: 0;
         transform: translateY(4px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* === estilo do modal de confirmaÁ„o de saÌda === */
+/* ===========================
+   MODAL
+=========================== */
+
 .modal {
-    display: none; /* comeÁa escondido */
+    display: none;
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.6);
@@ -115,10 +183,18 @@
     animation: fadeIn 0.2s ease-out;
 }
 
-/* ===== FOOTER ===== */
+/* ===========================
+   Footer
+=========================== */
+
 .site-footer {
     text-align: center;
     padding: 20px;
     font-size: 0.9rem;
     color: #666;
+}
+
+/* Fonte global */
+* {
+    font-family: 'Poppins', sans-serif;
 }

@@ -1,109 +1,227 @@
 @import url('chamados.css');
+
 :root {
     --dark: #2F374C;
     --light: #EDEDED;
+    --muted: #6b7280;
     --white: #FFFFFF;
-    --primary: #6C63FF;
-    --error: #ff4d4d; /* adiciona essa linha aqui */
+    --primary: #3B82F6;
+    --primary-dark: #1E40AF;
+    --error: #ff4d4d;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* Ajuste do layout principal */
+/* ===== LAYOUT ===== */
 .layout {
-  display: flex;
-  min-height: calc(100vh - 120px); /* cabeçalho + rodapé */
+    display: flex;
+    min-height: calc(100vh - 120px);
 }
 
-/* Centralização e responsividade do card */
 .page {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 40px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px 20px;
 }
 
+/* ===== TÍTULO CENTRALIZADO ===== */
+.hero-title {
+    text-align: center;
+    font-size: 28px; /* igual perfil do técnico */
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: var(--dark);
+}
+
+/* ===== CARD DE PERFIL ===== */
 .perfil-card {
-  background: #fff;
-  border-radius: var(--radius);
-  padding: 40px 40px 50px;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* centraliza a foto */
-  gap: 25px;
-  width: 100%;
-  max-width: 600px;
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 40px 40px 50px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    max-width: 600px;
 }
 
+/* ÍCONE DO PERFIL */
 .foto-perfil {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  background: #e6ebf5;
-  border: 3px solid var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--dark);
-  font-size: 65px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: #e6ebf5;
+    border: 3px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark);
+    font-size: 55px; /* igual perfil do técnico */
 }
 
+/* FORMULÁRIO */
 .perfil-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  text-align: left; /* volta o texto à esquerda */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
 }
 
 .perfil-form label {
-  font-weight: 600;
+    font-weight: 600;
+    font-size: 16px; /* igual do técnico */
 }
 
-.perfil-form input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: var(--radius);
-}
-
-.perfil-form input:focus {
-  outline: 2px solid var(--primary);
-}
-
-#chatBox {
-    max-height: 500px;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-}
-
-* {
+.perfil-form input,
+.perfil-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
     font-family: 'Poppins', sans-serif;
+    font-size: 16px; /* igual do técnico */
 }
 
-.msg {
-    animation: fadeIn 0.3s ease;
+.perfil-form input:focus,
+.perfil-form select:focus {
+    outline: 2px solid var(--primary);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(4px);
-    }
+/* BOTÃO */
+.btn-chamado {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    font-weight: 600;
+    font-size: 16px; /* igual perfil do técnico */
+    cursor: pointer;
+    transition: background 0.3s;
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.btn-chamado:hover {
+    background: var(--primary-dark);
+}
+
+/* MODAL DE SAÍDA CUSTOMIZADO */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(47, 55, 76, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 400px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.modal-content h2,
+.modal-content p {
+    font-size: 16px; /* igual inputs */
+    color: var(--dark);
+    margin-bottom: 20px;
+}
+
+.modal-content button {
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 16px; /* mesmo tamanho do botão */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* BOTÃO CANCELAR */
+.modal-content .btn-fechar {
+    background-color: var(--muted);
+    color: #fff;
+    margin-left: 10px;
+}
+
+.modal-content .btn-fechar:hover {
+    background-color: #4b5563;
+}
+
+/* BOTÃO SAIR */
+.modal-content .btn-sair {
+    background-color: var(--error); /* vermelho */
+    color: #fff;                     /* texto branco */
+}
+
+.modal-content .btn-sair:hover {
+    background-color: #dc2626;       /* vermelho mais escuro ao passar o mouse */
+    transform: scale(1.03);
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #0b152b;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    padding: 12px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius);
+    margin-bottom: 8px;
+    transition: 0.3s;
+}
+
+.sidebar li i {
+    margin-right: 10px;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
+    background: var(--primary-dark);
+}
+
+.sidebar li a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    width: 100%;
 }
 
 /* FOOTER */
 .site-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
-  color: #666;
-  background: var(--light);
-  border-top: 1px solid #ddd;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    color: #666;
+    background: var(--light);
+    border-top: 1px solid #ddd;
 }
-

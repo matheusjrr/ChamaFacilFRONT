@@ -294,4 +294,53 @@ header.site-header {
     margin-top: auto;
 }
 
+/* ===== MODAL DE SAÍDA ===== */
+.modal-content h2 {
+    font-size: 1.2rem; 
+    font-weight: 600;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ===== BOTÕES DO MODAL ===== */
+.modal-content .btn-sair,
+.modal-content .btn-fechar {
+    padding: 12px 25px; /* aumenta o tamanho dos botões */
+    font-size: 1rem; /* tamanho da fonte maior e proporcional */
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Botão Sair */
+.modal-content .btn-sair {
+    background-color: var(--error); 
+    color: #fff; 
+}
+.modal-content .btn-sair:hover {
+    background-color: #dc2626; 
+    transform: scale(1.03);
+}
+
+/* Botão Cancelar */
+.modal-content .btn-fechar {
+    background-color: var(--muted); 
+    color: #fff;
+}
+.modal-content .btn-fechar:hover {
+    background-color: #4b5563;
+}
+
+/* Centralizar os botões no modal */
+.modal-content .flex {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* espaçamento entre os botões */
+    margin-top: 20px;
+}
+
+
 
