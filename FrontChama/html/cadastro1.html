@@ -11,37 +11,34 @@
   <!-- Fontes -->
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
+    rel="stylesheet"/>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- CSS correto -->
+  <!-- CSS -->
   <link rel="stylesheet" href="../css/cadastro1.css" />
 </head>
 
+<body class="bg-[#EDEDED] flex justify-center items-center min-h-screen font-[Poppins]">
 
-<body class="bg-[#EDEDED] flex justify-center items-center h-screen font-[Poppins]">
+  <div class="cadastro-container flex bg-white shadow-xl rounded-2xl overflow-hidden animate-fadeIn w-full max-w-[950px]">
 
-  <div class="cadastro-container flex bg-white shadow-xl rounded-2xl overflow-hidden animate-fadeIn w-[950px] h-auto">
-    
     <!-- Left Section -->
-    <div class="left-panel bg-[#2F374C] text-white flex flex-col justify-center items-center w-[40%] p-10">
-      <div class="text-left mb-10">
+    <div class="left-panel bg-[#2F374C] text-white flex flex-col justify-center items-center w-full md:w-[40%] p-10">
+      <div class="text-left mb-10 w-full">
         <h2 class="text-3xl font-bold mb-4">Bem-vindo de volta!</h2>
         <p class="text-base">Acesse sua conta agora mesmo</p>
       </div>
 
-      <!-- Link corrigido (arquivo está na mesma pasta) -->
       <a href="login.html" 
-         class="border-2 border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-[#2F374C] transition-all font-semibold">
+         class="border-2 border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-[#2F374C] transition-all font-semibold mt-4">
          ENTRAR
       </a>
     </div>
 
     <!-- Right Section -->
-    <div class="right-panel flex flex-col justify-center items-center w-[60%] p-10 relative">
+    <div class="right-panel flex flex-col justify-center items-center w-full md:w-[60%] p-10 relative">
       
       <button onclick="window.location.href='login.html'" class="absolute top-5 left-5 text-[#2F374C] hover:scale-110 transition">
         <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" stroke="#2F374C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -52,39 +49,139 @@
       <h2 class="text-2xl font-semibold text-[#2F374C] mb-6">Crie sua conta</h2>
 
       <form id="cadastroForm" class="flex flex-col items-center w-full">
-         
-          <div class="w-full mb-2 relative">
-              <input type="text" id="nome" placeholder="Digite seu nome completo..." class="input-field" />
-              <p id="erroNome" class="text-red-500 text-sm mt-1 hidden">Preencha seu nome completo.</p>
-          </div>
+        
+        <!-- Input Group -->
+        <div class="input-group w-full mb-3">
+          <input type="text" id="nome" placeholder="Digite seu nome completo..." class="input-field" />
+          <p id="erroNome" class="error-message hidden">Preencha seu nome completo.</p>
+        </div>
 
-          <div class="w-full mb-2 relative">
-              <input type="text" id="funcional" placeholder="Digite sua funcional..." class="input-field" />
-              <p id="erroFuncional" class="text-red-500 text-sm mt-1 hidden">Preencha sua funcional.</p>
-          </div>
+        <div class="input-group w-full mb-3">
+          <input type="text" id="funcional" placeholder="Digite sua funcional..." class="input-field" />
+          <p id="erroFuncional" class="error-message hidden">Preencha sua funcional.</p>
+        </div>
 
-          <div class="w-full mb-2 relative">
-              <input type="password" id="senha" placeholder="Crie uma senha..." class="input-field" />
-              <p id="erroSenha" class="text-red-500 text-sm mt-1 hidden">A senha deve ter pelo menos 6 caracteres.</p>
-          </div>
+        <div class="input-group w-full mb-3">
+          <input type="password" id="senha" maxlength="6" placeholder="Crie uma senha..." class="input-field" />
+          <p id="erroSenha" class="error-message hidden">A senha deve ter no máximo 6 caracteres.</p>
+        </div>
 
-          <div class="w-full mb-2 relative">
-              <input type="password" id="confirmarSenha" placeholder="Confirme sua senha..." class="input-field" />
-              <p id="erroConfirmar" class="text-red-500 text-sm mt-1 hidden">As senhas não conferem.</p>
-          </div>
+        <div class="input-group w-full mb-3">
+          <input type="password" id="confirmarSenha" maxlength="6" placeholder="Confirme sua senha..." class="input-field" />
+          <p id="erroConfirmar" class="error-message hidden">As senhas não conferem.</p>
+        </div>
 
-          <div class="flex items-center mt-2 mb-5 text-sm text-[#2F374C] w-full justify-center">
-              <input type="checkbox" id="termos" class="mr-2 accent-[#2F374C]" />
-              <label for="termos">Concordo com os <a href="termos.html" class="underline font-semibold hover:text-[#57607A]">Termos de Uso</a></label>
-          </div>
-          <p id="erroTermos" class="text-red-500 text-sm mt-1 hidden w-full text-center">Você precisa concordar com os Termos.</p>
+        <!-- Termos -->
+        <div class="flex items-center mt-2 mb-2 text-sm text-[#2F374C] w-full justify-center">
+          <input type="checkbox" id="termos" class="mr-2 accent-[#2F374C]" />
+          <label for="termos">
+            Concordo com os  
+            <span id="abrirTermos" class="underline font-semibold cursor-pointer hover:text-[#57607A]">
+              Termos de Uso
+            </span>
+          </label>
+        </div>
+        <p class="error-message" id="erroTermos"></p>
+ 
+        <button type="submit" class="bg-[#2F374C] text-white px-10 py-2.5 rounded-full hover:opacity-90 transition-all font-semibold mt-3">
+          CADASTRAR
+        </button>
 
-          <button type="submit" class="bg-[#2F374C] text-white px-10 py-2.5 rounded-full hover:opacity-90 transition-all font-semibold mt-3">
-              CADASTRAR
-          </button>
       </form>
     </div>
   </div>
+
+<!-- MODAL DOS TERMOS -->
+<div id="modalTermos" class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-50 flex items-center justify-center">
+  <div class="bg-white w-[90%] max-w-[800px] max-h-[85vh] rounded-xl shadow-xl p-6 flex flex-col">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center border-b pb-3">
+      <h2 class="text-xl font-semibold text-[#2F374C]">Termos de Uso</h2>
+      <button id="fecharModal" class="text-[#2F374C] hover:text-black text-xl">×</button>
+    </div>
+
+    <!-- Conteúdo rolagem -->
+    <div class="overflow-y-auto mt-4 pr-2" style="max-height: 60vh;">
+      <!-- conteúdo dos termos-->
+      <h3><strong>1. Introdução</strong></h3>
+      <p>Estes Termos de Uso regulam o acesso e uso do sistema <strong>Chama Fácil</strong> ("Sistema"), uma plataforma de gestão de chamados destinada a organizações e usuários autorizados. Ao utilizar o Sistema, você concorda com estes termos na íntegra.</p><br>
+
+      <h3><strong>2. Definições</strong></h3>
+      <ul>
+       <li><strong>Serviço:</strong> funcionalidades oferecidas pelo Chama Fácil para registro, acompanhamento e gestão de chamados.</li>
+       <li><strong>Usuário:</strong> pessoa física ou jurídica autorizada a utilizar o Sistema.</li>
+       <li><strong>Administrador:</strong> usuário com privilégios para gerenciar contas, filas e configurações do Sistema.</li>
+      </ul><br>
+
+      <h3><strong>3. Objeto</strong></h3>
+      <p>O Chama Fácil fornece ferramentas para abertura, classificação, priorização, atribuição e acompanhamento de chamados técnicos e solicitações de serviço. As funcionalidades e integrações disponíveis podem variar conforme o plano ou configuração contratada.</p><br>
+
+      <h3><strong>4. Cadastro e Acesso</strong></h3>
+      <p>O Usuário concorda em fornecer informações verdadeiras e atualizadas ao se cadastrar. O acesso ao Sistema é individual; credenciais não podem ser compartilhadas. O Usuário é responsável por manter a confidencialidade de senhas e por todas as atividades realizadas com sua conta.</p><br>
+
+      <h3><strong>5. Uso Aceitável</strong></h3>
+      <p>É proibido usar o Sistema para fins ilícitos, envio de spam, tentativas de invasão, disseminação de malware, violação de direitos de terceiros ou qualquer comportamento que prejudique a operação da plataforma ou de outros usuários.</p><br>
+
+      <h3><strong>6. Privacidade e Proteção de Dados</strong></h3>
+      <p>As informações coletadas no processo de cadastro e pelo uso do Sistema serão tratadas conforme nossa <strong>Política de Privacidade</strong>. Entre os dados coletados podem constar: nome, e-mail, funcional, histórico de chamados e dados técnicos relacionados ao uso. O Chama Fácil implementa medidas técnicas e administrativas razoáveis para proteger os dados, porém o Usuário reconhece que nenhuma transmissão online é 100% segura.</p> <br>
+
+      <h3><strong>7. Propriedade Intelectual</strong></h3>
+      <p>Todos os direitos de propriedade intelectual relacionados ao Sistema, incluindo software, interface, documentação, marcas e conteúdos são de titularidade do fornecedor do Chama Fácil ou de terceiros licenciadores. O Usuário recebe apenas uma licença limitada, não exclusiva e intransferível para uso conforme estes Termos.</p><br>
+
+      <h3><strong>8. Limitação de Responsabilidade</strong></h3>
+      <p>Na máxima extensão permitida por lei, o Chama Fácil não será responsável por danos indiretos, lucros cessantes, perda de dados ou interrupção de negócios decorrentes do uso ou incapacidade de uso do Sistema. A responsabilidade total por quaisquer danos diretos fica limitada ao valor pago pelo Usuário nos últimos 12 meses (ou, se não houver pagamento, a um montante simbólico definido pelo provedor).</p> <br>
+
+      <h3><strong>9. Disponibilidade e Manutenção</strong></h3>
+      <p>O fornecedor se esforçará para manter o Sistema disponível, mas pode haver interrupções por manutenção, atualização ou motivos técnicos. O Usuário será informado, sempre que possível, sobre manutenções programadas.</p> <br>
+
+      <h3><strong>10. Atualizações e Alterações nos Termos</strong></h3>
+      <p>Estes Termos podem ser atualizados periodicamente. Alterações significativas serão comunicadas com antecedência. O uso continuado do Sistema após a publicação das alterações constitui aceitação dos novos termos.</p> <br>
+
+      <h3><strong>11. Rescisão</strong></h3>
+      <p>O descumprimento destes Termos poderá resultar em suspensão ou encerramento da conta do Usuário, sem prejuízo de outras medidas cabíveis. O Usuário também pode encerrar a conta a qualquer momento, observadas disposições contratuais e legais aplicáveis.</p> <br>
+
+     <h3><strong>12. Integração com Terceiros</strong></h3>
+     <p>O Sistema pode integrar-se a serviços de terceiros (ex.: e-mail, APIs, soluções de autenticação). O uso dessas integrações pode estar sujeito aos termos desses provedores, sendo responsabilidade do Usuário observar as regras aplicáveis.</p> <br>
+
+     <h3><strong>13. Obrigações do Usuário</strong></h3>
+     <ul>
+      <li>- Fornecer dados verdadeiros e manter seu cadastro atualizado.</li>
+      <li>- Utilizar o Sistema conforme sua finalidade e respeitar terceiros.</li>
+      <li>- Comunicar imediatamente qualquer uso indevido de sua conta.</li> <br>
+     </ul>
+
+     <h3><strong>13.Comunicações</strong></h3>
+     <p>Todas as comunicações entre as partes podem ser feitas por e-mail cadastrado ou por canais oficiais. Comunicações eletrônicas são consideradas entregues quando enviadas para o endereço registrado.</p> <br>
+
+     <h3><strong>14.Legislação e Foro</strong></h3>
+     <p>Estes Termos serão regidos pela legislação brasileira. As partes elegem o foro da comarca da cidade sede do provedor do Chama Fácil para resolução de litígios, salvo disposição legal em contrário.</p> <br>
+
+     <h3><strong>16. Disposições Gerais</strong></h3>
+     <p>Se qualquer disposição destes Termos for considerada inválida, as demais permanecerão em vigor. A não exigência de cumprimento por uma das partes não implicará renúncia de direitos.</p><br>
+
+     <h3><strong>17. Contato</strong></h3>
+     <p>Em caso de dúvidas sobre estes Termos ou sobre o funcionamento do Chama Fácil, entre em contato pelo e-mail <a href="liviaalmeidap8@gmail.com">suporte@chamafacil.com.br</a>.</p><br><br>
+
+   <footer class="terms-footer">
+    <p>Data de vigência: <strong>01 de Janeiro de 2025</strong></p>
+   </footer>
+
+    </div>
+
+    <!-- Ações -->
+    <div class="mt-5 flex justify-end gap-3 border-t pt-3">
+      <button id="btnCancelarTermos" class="px-4 py-2 rounded-md border border-[#2F374C] text-[#2F374C] hover:bg-gray-100">
+        Fechar
+      </button>
+
+      <button id="btnAceitarTermos" class="px-4 py-2 rounded-md bg-[#2F374C] text-white hover:opacity-90">
+        Concordo
+      </button>
+    </div>
+
+  </div>
+</div>
 
   <script src="../js/cadastro1.js"></script>
 </body>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Relatórios - Técnico</title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- CSS da Página -->
+  <link rel="stylesheet" href="../css/relatorio.css" />
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="../assets/logo.png" alt="Logo Chama Fácil" class="brand-logo">
+        <span class="brand-title">Chama Fácil</span>
+      </div>
+
+      <nav class="main-nav">
+        <a class="nav-link active" href="#">Relatórios - TÉCNICO</a>
+      </nav>
+
+      <div class="profile-area" title="Perfil">
+        <i class="fa-solid fa-user-circle"></i>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="tec_faq.html"><i class="fa-solid fa-headset"></i> Central de Chamados</a></li>
+        <li class="active"><a href="relatorio.html"><i class="fa-solid fa-chart-simple"></i> Relatórios</a></li>
+        <li><a href="tec_perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+        <li><a href="login.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</a></li>
+      </ul>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="page">
+
+      <h1 class="hero-title"><i class="fa-solid fa-chart-line"></i> Relatórios de Chamados</h1>
+
+      <!-- FILTROS -->
+      <div class="filtros-wrapper mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+          <div>
+            <label class="font-semibold">Status</label>
+            <select id="filtroStatus" class="form-select mt-1">
+              <option value="">Todos</option>
+              <option>Aberto</option>
+              <option>Em andamento</option>
+              <option>Concluído</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="font-semibold">Categoria</label>
+            <select id="filtroCategoria" class="form-select mt-1">
+              <option value="">Todas</option>
+              <option>TI</option>
+              <option>Equipamento</option>
+              <option>Infraestrutura</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="font-semibold">Usuário</label>
+            <select id="filtroUsuario" class="form-select mt-1">
+              <option value="">Todos</option>
+              <option>João Silva</option>
+              <option>Ana Pereira</option>
+              <option>Lívia (Você)</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tabela-wrapper">
+        <table class="relatorio-tabela">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Usuário</th>
+              <th>Categoria</th>
+              <th>Descrição</th>
+              <th>Status</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+
+          <tbody id="tabelaDados">
+            <!-- Preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Botões -->
+      <div class="export-buttons">
+        <button id="btnPdf" class="export pdf"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</button>
+        <button id="btnExcel" class="export excel"><i class="fa-solid fa-file-excel"></i> Exportar Excel</button>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- SheetJS (Excel) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- jsPDF AutoTable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- JS -->
+  <script src="../js/relatorio.js"></script>
+</body>
+</html>

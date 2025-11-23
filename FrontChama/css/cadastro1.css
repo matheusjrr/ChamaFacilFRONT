@@ -1,54 +1,148 @@
-﻿body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #EDEDED;
+﻿/* ======== ESTILO GERAL ======== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #EDEDED;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
+/* ======== CONTAINER DO FORM ======== */
+.cadastro-container {
+  width: 100%;
+  max-width: 950px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* ==== Painel Esquerdo ==== */
+.left-panel {
+  width: 40%;
+  background-color: #2F374C;
+  color: white;
+  padding: 50px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ==== Painel Direito ==== */
+.right-panel {
+  width: 60%;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* ======== INPUTS ======== */
 .input-field {
-    width: 80%;
-    background-color: #EDEDED;
-    padding: 12px;
-    border-radius: 6px;
-    outline: none;
-    margin-bottom: 6px;
-    font-size: 14px;
-    transition: all 0.2s;
-    border: 1px solid transparent; 
+  width: 80%;
+  background-color: #EDEDED;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;  /* borda padrão */
+  outline: none;
+  margin-bottom: 2px;       /* margem mínima para a mensagem */
+  font-size: 14px;
+  transition: all 0.2s;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-    .input-field:focus {
-        background-color: #fff;
-        box-shadow: 0 0 0 2px #2F374C33;
-    }
+.input-field:focus {
+  background-color: #fff;
+  box-shadow: 0 0 0 2px #2F374C33;
+}
 
+/* ======== ERRO ======== */
+.input-error {
+  border-color: #e63946 !important; /* borda vermelha sem alterar layout */
+}
+
+/* Mensagem de erro sempre ocupa espaço, altura fixa */
+.error-message {
+  color: #e63946;
+  font-size: 12px;
+  height: 16px;         /* altura fixa, não aumenta nada */
+  line-height: 16px;
+  text-align: left;
+  width: 80%;
+  display: block;
+  margin: 0 auto 10px auto;
+  visibility: hidden;   /* invisível quando não tem erro */
+}
+
+/* Mostra a mensagem quando input tem erro */
+.input-group .input-error ~ .error-message {
+  visibility: visible;
+}
+
+/* ======== ANIMAÇÃO ======== */
 .animate-fadeIn {
-    animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.input-error {
-    border: 2px solid #e53935 !important;
-    background-color: #ffebee !important;
-    box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+/* ======== MODAL SCROLL ======== */
+#modalTermos::-webkit-scrollbar {
+  width: 8px;
 }
 
-.input-normal {
-    border: 1px solid transparent;
-    transition: all 0.2s ease;
+#modalTermos::-webkit-scrollbar-thumb {
+  background: #2F374C;
+  border-radius: 8px;
 }
 
-.input-normal:focus {
-    background-color: #fff;
-    box-shadow: 0 0 0 2px #2F374C33;
-    border-color: #2F374C;
+/* ======== RESPONSIVIDADE ======== */
+@media (max-width: 900px) {
+  .cadastro-container {
+    flex-direction: column;
+    max-width: 500px;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+
+  .left-panel {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .right-panel {
+    padding: 30px 20px;
+  }
+
+  .input-field,
+  .error-message {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .left-panel h2 {
+    font-size: 24px;
+  }
+
+  .right-panel h2 {
+    font-size: 20px;
+  }
+
+  .input-field {
+    font-size: 13px;
+    padding: 10px;
+  }
 }
