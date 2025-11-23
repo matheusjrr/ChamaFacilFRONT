@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             descricao,
             numero_chamado: Math.floor(Math.random() * 1000),
             data_abertura: new Date().toISOString(),
-            status: 'Pendente',
+            status: 'pendente',
             id_usuario: usuario.id_usuario, // usa o id do usuário logado
             id_categoria: parseInt(categoria)
         };
