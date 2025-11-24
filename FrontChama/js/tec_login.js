@@ -81,15 +81,40 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // Objeto com dados essenciais para uso no sistema
+                // Objeto com dados essenciais para uso no sistema (SEM SENHA)
                 const tecnicoParaStorage = {
                     id: tecnico.id_tecnico,
                     nome: tecnico.nome_tecnico,
                     funcional: tecnico.funcional
                 };
 
-                // Armazena dados na sessão
+                // Armazena dados na sessão do técnico
                 sessionStorage.setItem('tecnicoLogado', JSON.stringify(tecnicoParaStorage));
+
+                // =========================
+                // NOVO: Busca todos os usuários (apenas campos essenciais)
+                // =========================
+                try {
+                    const respostaUsuarios = await fetch('https://localhost:7271/api/v1/Usuario');
+                    if (respostaUsuarios.ok) {
+                        const listaUsuarios = await respostaUsuarios.json();
+
+                        // Filtra apenas campos sem a senha
+                        const usuariosSeguros = listaUsuarios.map(u => ({
+                            Id_usuario: u.Id_usuario ?? u.id_usuario,
+                            Nome_usuario: u.Nome_usuario ?? u.nome_usuario,
+                            Funcional: u.Funcional ?? u.funcional,
+                            Tipo_usuario: u.Tipo_usuario ?? u.tipo_usuario
+                        }));
+
+                        sessionStorage.setItem('todosUsuarios', JSON.stringify(usuariosSeguros));
+                        console.log('Usuários salvos no sessionStorage:', usuariosSeguros);
+                    } else {
+                        console.warn('Não foi possível carregar os usuários para a sessão.');
+                    }
+                } catch (err) {
+                    console.error('Erro ao buscar usuários:', err);
+                }
 
                 alert(`Bem-vindo, ${tecnico.nome_tecnico}!`);
 
