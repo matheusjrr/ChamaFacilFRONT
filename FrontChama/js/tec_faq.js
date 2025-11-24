@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalStatus = document.getElementById('modalStatus');
   const modalDescricao = document.getElementById('modalDescricao');
   const modalTecnico = document.getElementById('modalTecnico');
+  const modalUsuario = document.getElementById('modalUsuario'); 
   const modalObservacao = document.getElementById('modalObservacao');
   const btnToggleStatus = document.getElementById('btnToggleStatus');
 
@@ -135,6 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
       modalTecnico.textContent = chamado.tecnico || 'Lívia Almeida';
       modalObservacao.value = chamado.observacao || '';
 
+      // =========================
+      // Solicitante correto pelo Id_usuario
+      // =========================
+      const todosUsuarios = JSON.parse(sessionStorage.getItem('todosUsuarios')) || [];
+      const usuarioEncontrado = todosUsuarios.find(u => u.Id_usuario === chamado.id_usuario);
+      modalUsuario.textContent = usuarioEncontrado ? usuarioEncontrado.Nome_usuario : 'Sem nome';
+
       btnToggleStatus.dataset.id = chamado.id_chamado;
       atualizarBotaoStatus(chamado);
 
@@ -259,10 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   btnCancelarSair.addEventListener('click', fecharModalSaida);
-
-  window.addEventListener('click', (e) => {
-    if (e.target === modalConfirm) fecharModalSaida();
-  });
+  window.addEventListener('click', (e) => { if (e.target === modalConfirm) fecharModalSaida(); });
 
   fetchChamados();
 });

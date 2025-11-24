@@ -51,6 +51,23 @@ function tratarStatus(rawStatus) {
 }
 
 // ==========================
+// Popular filtro de usuários
+// ==========================
+function popularFiltroUsuarios() {
+    const todosUsuarios = JSON.parse(sessionStorage.getItem('todosUsuarios')) || [];
+    
+    // Remove todas opções, exceto "Todos"
+    filtroUsuario.innerHTML = '<option value="">Todos</option>';
+
+    todosUsuarios.forEach(u => {
+        const option = document.createElement('option');
+        option.value = u.Nome_usuario;
+        option.textContent = u.Nome_usuario;
+        filtroUsuario.appendChild(option);
+    });
+}
+
+// ==========================
 // Buscar dados da API
 // ==========================
 async function carregarChamados() {
@@ -64,7 +81,7 @@ async function carregarChamados() {
         chamadosFiltrados = dados;
 
         renderizarTabela(chamados);
-
+        popularFiltroUsuarios(); // Atualiza filtro após carregar usuários
     } catch (erro) {
         console.error("Erro ao carregar chamados:", erro);
         tabela.innerHTML = `
@@ -84,6 +101,9 @@ function renderizarTabela(lista) {
     chamadosFiltrados = lista; // <- salva filtrados
     tabela.innerHTML = "";
 
+    // Recupera todos os usuários da sessão
+    const todosUsuarios = JSON.parse(sessionStorage.getItem('todosUsuarios')) || [];
+
     if (!lista || lista.length === 0) {
         tabela.innerHTML = `
             <tr>
@@ -98,10 +118,14 @@ function renderizarTabela(lista) {
         const categoriaNome = categoriasMap[ch.id_categoria] ?? "Desconhecida";
         const displayStatus = tratarStatus(ch.status);
 
+        // Busca o usuário correto pelo Id_usuario
+        const usuarioEncontrado = todosUsuarios.find(u => u.Id_usuario === ch.id_usuario);
+        const nomeUsuario = usuarioEncontrado ? usuarioEncontrado.Nome_usuario : "Sem nome";
+
         tabela.innerHTML += `
             <tr>
                 <td>${ch.id_chamado}</td>
-                <td>${ch.id_usuario ?? ch.usuario ?? "Sem nome"}</td>
+                <td>${nomeUsuario}</td>
                 <td>${categoriaNome}</td>
                 <td>${ch.descricao}</td>
                 <td>${displayStatus}</td>
@@ -119,7 +143,10 @@ function aplicarFiltros() {
 
     const statusFiltro = filtroStatus.value;
     const categoria = filtroCategoria.value;
-    const usuario = filtroUsuario.value;
+    const usuarioFiltro = filtroUsuario.value;
+
+    // Recupera todos os usuários da sessão
+    const todosUsuarios = JSON.parse(sessionStorage.getItem('todosUsuarios')) || [];
 
     if (statusFiltro) {
         filtrado = filtrado.filter(c =>
@@ -133,10 +160,12 @@ function aplicarFiltros() {
         );
     }
 
-    if (usuario) {
-        filtrado = filtrado.filter(c =>
-            (c.usuarioNome ?? c.usuario ?? c.id_usuario)?.toString().toLowerCase() === usuario.toLowerCase()
-        );
+    if (usuarioFiltro) {
+        filtrado = filtrado.filter(c => {
+            const usuarioEncontrado = todosUsuarios.find(u => u.Id_usuario === c.id_usuario);
+            const nomeUsuario = usuarioEncontrado ? usuarioEncontrado.Nome_usuario : "";
+            return nomeUsuario.toLowerCase() === usuarioFiltro.toLowerCase();
+        });
     }
 
     renderizarTabela(filtrado);
@@ -147,20 +176,28 @@ filtroStatus.addEventListener("change", aplicarFiltros);
 filtroCategoria.addEventListener("change", aplicarFiltros);
 filtroUsuario.addEventListener("change", aplicarFiltros);
 
+// ==========================
+// Exportar Excel
+// ==========================
 btnExcel.addEventListener("click", () => {
-    const rows = chamadosFiltrados.map(ch => ({
-        "ID Chamado": ch.id_chamado,
-        "Usuário": ch.id_usuario ?? ch.usuario,
-        "Categoria": categoriasMap[ch.id_categoria] ?? "Desconhecida",
-        "Descrição": ch.descricao,
-        "Status": tratarStatus(ch.status),
-        "Data Abertura": new Date(ch.data_abertura ?? ch.data).toLocaleDateString("pt-BR")
-    }));
+    const todosUsuarios = JSON.parse(sessionStorage.getItem('todosUsuarios')) || [];
 
-    // Cria worksheet
+    const rows = chamadosFiltrados.map(ch => {
+        const usuarioEncontrado = todosUsuarios.find(u => u.Id_usuario === ch.id_usuario);
+        const nomeUsuario = usuarioEncontrado ? usuarioEncontrado.Nome_usuario : "Sem nome";
+
+        return {
+            "ID Chamado": ch.id_chamado,
+            "Usuário": nomeUsuario,
+            "Categoria": categoriasMap[ch.id_categoria] ?? "Desconhecida",
+            "Descrição": ch.descricao,
+            "Status": tratarStatus(ch.status),
+            "Data Abertura": new Date(ch.data_abertura ?? ch.data).toLocaleDateString("pt-BR")
+        };
+    });
+
     const worksheet = XLSX.utils.json_to_sheet(rows);
 
-    // 1) Ajusta largura das colunas automaticamente
     const colWidths = Object.keys(rows[0]).map(key => {
         const maxLength = Math.max(
             key.length,
@@ -170,72 +207,36 @@ btnExcel.addEventListener("click", () => {
     });
     worksheet['!cols'] = colWidths;
 
-    // 2) Ativa autofiltro
     const range = XLSX.utils.decode_range(worksheet['!ref']);
     worksheet['!autofilter'] = { ref: XLSX.utils.encode_range(range) };
-
-    // 3) Congela cabeçalho
     worksheet['!freeze'] = { xSplit: 0, ySplit: 1 };
 
-    // 4) Estilo do cabeçalho (negrito + fundo cinza)
-    const headerCells = Object.keys(rows[0]);
-    headerCells.forEach((key, idx) => {
-        const cellRef = XLSX.utils.encode_cell({ r: 0, c: idx });
-        if (!worksheet[cellRef]) return;
-
-        worksheet[cellRef].s = {
-            fill: { fgColor: { rgb: "DDDDDD" } },
-            font: { bold: true },
-            border: {
-                top: { style: "thin", color: { rgb: "000000" } },
-                left: { style: "thin", color: { rgb: "000000" } },
-                right: { style: "thin", color: { rgb: "000000" } },
-                bottom: { style: "thin", color: { rgb: "000000" } }
-            }
-        };
-    });
-
-    // 5) Bordas para todas as células
-    for (let R = range.s.r; R <= range.e.r; R++) {
-        for (let C = range.s.c; C <= range.e.c; C++) {
-            const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
-            const cell = worksheet[cellRef];
-            if (!cell) continue;
-
-            cell.s = {
-                ...cell.s,
-                border: {
-                    top: { style: "thin", color: { rgb: "000000" } },
-                    left: { style: "thin", color: { rgb: "000000" } },
-                    right: { style: "thin", color: { rgb: "000000" } },
-                    bottom: { style: "thin", color: { rgb: "000000" } }
-                }
-            };
-        }
-    }
-
-    // Cria workbook e salva
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Chamados");
-
     XLSX.writeFile(workbook, "chamados.xlsx");
 });
 
 // ==========================
-// EXPORTAR PDF
+// Exportar PDF
 // ==========================
 btnPdf.addEventListener("click", () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    const rows = chamadosFiltrados.map(ch => [
-        ch.id_chamado,
-        ch.id_usuario ?? ch.usuario,
-        categoriasMap[ch.id_categoria] ?? "Desconhecida",
-        ch.descricao,
-        tratarStatus(ch.status),
-        new Date(ch.data_abertura ?? ch.data).toLocaleDateString("pt-BR")
-    ]);
+    const todosUsuarios = JSON.parse(sessionStorage.getItem('todosUsuarios')) || [];
+
+    const rows = chamadosFiltrados.map(ch => {
+        const usuarioEncontrado = todosUsuarios.find(u => u.Id_usuario === ch.id_usuario);
+        const nomeUsuario = usuarioEncontrado ? usuarioEncontrado.Nome_usuario : "Sem nome";
+        return [
+            ch.id_chamado,
+            nomeUsuario,
+            categoriasMap[ch.id_categoria] ?? "Desconhecida",
+            ch.descricao,
+            tratarStatus(ch.status),
+            new Date(ch.data_abertura ?? ch.data).toLocaleDateString("pt-BR")
+        ];
+    });
 
     doc.text("Relatório de Chamados", 14, 15);
 
@@ -252,5 +253,3 @@ btnPdf.addEventListener("click", () => {
 // Inicialização
 // ==========================
 carregarChamados();
-
-/* Botões agora funcionando */
