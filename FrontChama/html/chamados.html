@@ -14,6 +14,9 @@
 
     <!-- CSS correto -->
     <link rel="stylesheet" href="../css/chamados.css" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
@@ -99,7 +102,8 @@
                             <th>Ação</th>
                         </tr>
                     </thead>
-                    <tbody class="chamado-tbody"></tbody>
+                    <tbody class="chamado-tbody">
+                    </tbody>
                 </table>
             </section>
 
@@ -116,13 +120,16 @@
                             <th>Ação</th>
                         </tr>
                     </thead>
-                    <tbody class="chamado-tbody"></tbody>
+                    <tbody class="chamado-tbody">
+                        
+                    </tbody>
                 </table>
             </section>
 
-            <!-- Modal -->
+            <!-- Modal Detalhes -->
             <div class="modal" id="modal">
                 <div class="modal-content">
+
                     <span class="close">&times;</span>
                     <h3>Detalhes do Chamado</h3>
                     <p><strong>ID:</strong> <span id="modal-id"></span></p>
@@ -136,6 +143,30 @@
             </div>
         </main>
     </div>
+
+            <!-- MODAL DE EDIÇÃO -->
+            <div id="modalEditar" class="modal">
+              <div class="modal-content">
+               <button id="closeModalEditar" class="close-btn">&times;</button>
+
+               <h3>Editar Chamado</h3>
+
+               <label>Categoria:</label>
+               <select id="editCategoria" class="input-select-categoria">
+                 <option value="2">TI</option>
+                 <option value="3">Equipamento</option>
+                 <option value="4">Infraestrutura</option>
+               </select>
+
+                <label>Descrição:</label>
+                <textarea id="editDescricao" class="input-descricao-categoria"></textarea>
+
+            <div class="modal-footer">
+            <button id="btnSalvarEdicao" class="btn-chamado">Salvar</button>
+            <button id="btnCancelarEdicao" class="btn-fechar">Cancelar</button>
+        </div>
+    </div>
+</div>
 
     <!-- botão e chat flutuante -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -177,6 +208,7 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
     </footer>
