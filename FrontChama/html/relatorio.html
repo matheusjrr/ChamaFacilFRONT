@@ -50,7 +50,11 @@
         <li><a href="tec_faq.html"><i class="fa-solid fa-headset"></i> Central de Chamados</a></li>
         <li class="active"><a href="relatorio.html"><i class="fa-solid fa-chart-simple"></i> Relatórios</a></li>
         <li><a href="tec_perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
-        <li><a href="login.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sair</a></li>
+        <li>
+                    <a href="#" id="btnSair">
+                        <i class="fa-solid fa-clipboard-list"></i> Sair
+                    </a>
+                </li>
       </ul>
     </aside>
 
@@ -99,7 +103,7 @@
           <thead>
             <tr>
               <th>Número do Chamado</th>
-              <th>Nome</th>
+              <th>Solicitante</th>
               <th>Categoria</th>
               <th>Descrição</th>
               <th>Status</th>
@@ -121,10 +125,55 @@
 
     </main>
   </div>
+    <!-- MODAL DE CONFIRMAÇÃO DE SAÍDA -->
+<div id="modalConfirm" class="modalSair">
+  <div class="modalSair-content text-center">
+    <h2 class="text-lg font-semibold mb-4 text-gray-800">Tem certeza que deseja sair?</h2>
+    <div class="flex justify-center gap-4">
+      <button id="btnConfirmarSair" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Sair</button>
+      <button id="btnCancelarSair" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">Cancelar</button>
+    </div>
+  </div>
+</div>
 
+<!-- JS DO MODAL (CORRIGIDO) -->
+<script>
+  const modalConfirm = document.getElementById('modalConfirm');
+  const btnConfirmarSair = document.getElementById('btnConfirmarSair'); // ✅ ID certo
+  const btnCancelarSair = document.getElementById('btnCancelarSair');
+  const btnSair = document.getElementById('btnSair');
+
+  btnSair.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalConfirm.style.display = 'flex';
+  });
+
+  function fecharModalSaida() {
+    modalConfirm.style.display = 'none';
+  }
+
+  btnConfirmarSair.addEventListener('click', () => {
+    sessionStorage.removeItem('tecnicoLogado');
+
+    // Se quiser voltar pro login, use esse caminho no lugar:
+    window.location.href = 'login.html'; // 👈 se quiser ir pro login
+    // ou mantém:
+    // window.location.href = '../html/home.html';
+  });
+
+  btnCancelarSair.addEventListener('click', fecharModalSaida);
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modalConfirm) {
+      fecharModalSaida();
+    }
+  });
+</script>
   <footer class="site-footer">
     <div>© 2025 Chama Fácil — suporte: chamafacil@outlook.com</div>
   </footer>
+
+
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

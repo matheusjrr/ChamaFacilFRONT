@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Captura dos elementos
+    // elementos
     const funcionalInput = document.getElementById('funcional');
     const senhaInput = document.getElementById('senha');
     const toggleSenha = document.getElementById('toggleSenha');
@@ -15,36 +15,77 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // Controle do botão "olho" da senha
+    // Função que controla visibilidade do botão do olho
     const toggleIconVisibility = () => {
         if (!toggleSenha) return;
-
         if (senhaInput.value.length > 0) {
+            // mostra o botão do olho
             toggleSenha.classList.remove('hidden');
-        } else {
-            toggleSenha.classList.add('hidden');
-            senhaInput.type = 'password';
+            toggleSenha.style.pointerEvents = 'auto';
+
+            // sincroniza o ícone quando começa a digitar (deve começar como "senha oculta")
             if (iconSenha) {
-                iconSenha.innerHTML = `<path d="M1 1l18 18M10 10a3 3 0 0 1 3 3m0 0a3 3 0 0 1-3 3m0 0a3 3 0 0 1-3-3m0 0a3 3 0 0 1 3-3"/>`;
+                if (senhaInput.type === 'password') {
+                    // ícone de olho FECHADO / riscado (representa senha escondida)
+                    iconSenha.innerHTML = `
+                        <path d="M2 2l16 16"/>
+                        <path d="M1 10s4-7 9-7 5 2.5 7 5"/>
+                        <path d="M14 14a9.94 9.94 0 0 1-4 .97c-5 0-9-7-9-7a13.94 13.94 0 0 1 3.98-4.09"/>
+                    `;
+                } else {
+                    // ícone de olho ABERTO (senha visível)
+                    iconSenha.innerHTML = `
+                        <path d="M1 10s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7z"/>
+                        <circle cx="10" cy="10" r="3"/>
+                    `;
+                }
             }
+        } else {
+            // esconde o botão e garante que o input volte a password
+            toggleSenha.classList.add('hidden');
+
+            // reseta ícone para o padrão correto (sempre oculto)
+            if (iconSenha) {
+                // coloca o SVG padrão (olho fechado/oculto)
+                iconSenha.innerHTML = `
+                    <path d="M2 2l16 16"/>
+                    <path d="M1 10s4-7 9-7 9 7 9 7-1.43 2.5-3.5 4.22"/>
+                `;
+            }
+            senhaInput.type = 'password';
         }
     };
 
-    senhaInput.addEventListener('input', toggleIconVisibility);
+    // inicializa visibilidade
     toggleIconVisibility();
 
-    // Alterna mostrar/ocultar senha
-    if (toggleSenha) {
-        toggleSenha.addEventListener('click', () => {
-            if (senhaInput.type === 'password') {
-                senhaInput.type = 'text';
-                iconSenha.innerHTML = `<path d="M1 10s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7z"/><circle cx="10" cy="10" r="3"/>`;
-            } else {
-                senhaInput.type = 'password';
-                iconSenha.innerHTML = `<path d="M1 1l18 18M10 10a3 3 0 0 1 3 3m0 0a3 3 0 0 1-3 3m0 0a3 3 0 0 1-3-3m0 0a3 3 0 0 1 3-3"/>`;
-            }
-        });
+    // atualiza quando digita
+    senhaInput.addEventListener('input', toggleIconVisibility);
+
+    // alterna mostrar/ocultar senha ao clicar no botão
+    toggleSenha.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    if (senhaInput.type === 'password') {
+        senhaInput.type = 'text';
+        // olho aberto
+        iconSenha.innerHTML = `
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+        `;
+    } else {
+        senhaInput.type = 'password';
+        // olho riscado COM a bolinha
+        iconSenha.innerHTML = `
+            <path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8S2 12 2 12z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+            <line x1="2" y1="2" x2="22" y2="22"></line>
+        `;
     }
+
+    senhaInput.focus();
+});
+
 
     // Limpa mensagens e bordas de erro
     const resetErrosVisuais = () => {

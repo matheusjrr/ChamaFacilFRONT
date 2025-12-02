@@ -5,14 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Perfil do Técnico</title>
 
-<!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
-
-<!-- Fonts e Ícones -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- CSS local -->
 <link rel="stylesheet" href="../css/tec_perfil.css" />
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -27,7 +22,7 @@
             <span class="brand-title">Chama Fácil</span>
         </div>
         <nav class="main-nav" aria-label="Menu principal">
-            <a class="nav-link active" href="tec_faq.html">Central de Soluções - TÉCNICO</a>
+            <a class="nav-link active" href="tec_faq.html">Perfil - TÉCNICO</a>
         </nav>
         <div class="profile-area" title="Perfil">
             <i class="fa-solid fa-user"></i>
@@ -43,7 +38,7 @@
                     <i class="fa-solid fa-headset"></i> Central de Chamados
                 </a>
             </li>
-            <li class="active"><a href="relatorio.html"><i class="fa-solid fa-chart-simple"></i> Relatórios</a></li>
+            <li><a href="relatorio.html"><i class="fa-solid fa-chart-simple"></i> Relatórios</a></li>
             <li class="active">
                 <i class="fa-solid fa-user"></i> Perfil
             </li>
@@ -68,12 +63,6 @@
                 <label for="nome">Nome Completo:</label>
                 <input id="nome" type="text" disabled>
 
-                <label for="email">E-mail:</label>
-                <input id="email" type="email" disabled>
-
-                <label for="setor">Setor:</label>
-                <input id="setor" type="text" disabled>
-
                 <label for="funcional">Funcional:</label>
                 <input id="funcional" type="text" placeholder="Digite sua funcional">
 
@@ -89,7 +78,6 @@
     </main>
 </div>
 
-<!-- Modal de saída -->
 <div id="modalConfirm" class="modal">
     <div class="modal-content text-center">
         <h2 class="text-lg font-semibold mb-4 text-gray-800">Tem certeza que deseja sair?</h2>
@@ -106,13 +94,14 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // --- Recupera dados do técnico ---
+
     const sessionKeys = ["tecnicoLogado", "tecnico"];
     let tecnico = null;
+
     for (const key of sessionKeys) {
         const raw = sessionStorage.getItem(key);
         if (raw) {
-            try { tecnico = JSON.parse(raw); break; } 
+            try { tecnico = JSON.parse(raw); break; }
             catch { continue; }
         }
     }
@@ -123,21 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // --- Inputs ---
     const form = document.querySelector('.perfil-form');
     const nomeInput = document.getElementById("nome");
-    const emailInput = document.getElementById("email");
-    const setorInput = document.getElementById("setor");
     const funcionalInput = document.getElementById("funcional");
     const senhaInput = document.getElementById("senha");
     const confirmarSenhaInput = document.getElementById("confirmarSenha");
 
     nomeInput.value = tecnico.nome_tecnico || tecnico.nome || "";
-    emailInput.value = tecnico.email_tecnico || tecnico.email || "";
-    setorInput.value = tecnico.setor || "Hardware";
-    funcionalInput.value = ""; // sempre vazio
+    funcionalInput.value = "";
 
-    // --- Submit ---
     form.addEventListener("submit", async e => {
         e.preventDefault();
 
@@ -149,18 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!senha || !confirmar) { alert("Preencha a nova senha e a confirmação."); return; }
         if (senha !== confirmar) { alert("A senha e confirmação não coincidem."); return; }
 
-        const payload = {
-            Nome_tecnico: tecnico.nome_tecnico || tecnico.nome || "",
-            Funcional: funcional,
-            Senha: senha,
-            Id_setor: tecnico.id_setor || 0
-        };
+        const payload = { Senha: senha };
 
         try {
-            const id = tecnico.id; // ✅ usa o campo correto do sessionStorage
-            if (!id) { alert("ID do técnico não encontrado."); return; }
-
-            const res = await fetch(`https://localhost:7271/api/v1/Tecnico/${id}`, {
+            const res = await fetch(`https://localhost:7271/api/v1/Tecnico/alterar-senha/${funcional}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
@@ -178,8 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 senhaInput.value = "";
                 confirmarSenhaInput.value = "";
             } else {
-                const errorText = await res.text();
-                alert("Erro ao alterar senha: " + errorText);
+                alert("Erro ao alterar senha.");
             }
         } catch (err) {
             console.error(err);
@@ -187,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- Modal de saída ---
     const modalConfirm = document.getElementById("modalConfirm");
     const btnConfirmarSair = document.getElementById("btnConfirmarSair");
     const btnCancelarSair = document.getElementById("btnCancelarSair");
@@ -199,8 +172,9 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionStorage.removeItem("tecnicoLogado");
         window.location.href = "home.html";
     });
+
     btnCancelarSair.addEventListener("click", fecharModal);
-    window.addEventListener("click", (e) => { if (e.target === modalConfirm) fecharModal(); });
+    window.addEventListener("click", e => { if (e.target === modalConfirm) fecharModal(); });
 });
 </script>
 

@@ -217,24 +217,7 @@ body {
   cursor: pointer;
   font-weight: 600;
   transition: 0.2s;
-}
-
-.btn-andamento {
-  background-color: #2563eb;
-  color: #fff;
-}
-
-.btn-andamento:hover {
-  background-color: #1d4ed8;
-}
-
-.btn-concluido {
-  background-color: #16a34a;
-  color: #fff;
-}
-
-.btn-concluido:hover {
-  background-color: #15803d;
+  color: white !important; /* ← força todas as letras brancas */
 }
 
 .btn-voltar {
