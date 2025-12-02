@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalDescricao = document.getElementById('modalDescricao');
   const modalTecnico = document.getElementById('modalTecnico');
   const modalUsuario = document.getElementById('modalUsuario'); 
-  const modalObservacao = document.getElementById('modalObservacao');
   const btnToggleStatus = document.getElementById('btnToggleStatus');
 
   const chatToggle = document.getElementById('chatToggle');
@@ -134,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       modalStatus.textContent = formatarStatus(chamado.status);
       modalDescricao.textContent = chamado.descricao;
       modalTecnico.textContent = chamado.tecnico || 'Lívia Almeida';
-      modalObservacao.value = chamado.observacao || '';
+      
 
       // =========================
       // Solicitante correto pelo Id_usuario
@@ -182,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(`https://localhost:7271/api/v1/Chamado/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...chamado, status: novoStatus, observacao: modalObservacao.value })
+        body: JSON.stringify({ ...chamado, status: novoStatus })
       });
       if (!response.ok) throw new Error('Erro ao atualizar status');
       modal.style.display = 'none';

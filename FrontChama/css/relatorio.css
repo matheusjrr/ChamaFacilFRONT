@@ -132,6 +132,17 @@ body {
 }
 
 /* TABELA  */
+.relatorio-tabela thead th:first-child {
+  border-top-left-radius: var(--radius);
+}
+
+.relatorio-tabela thead th:last-child {
+  border-top-right-radius: var(--radius);
+}
+.relatorio-tabela thead th {
+  border-top: none;
+}
+
 .tabela-wrapper {
   background: #fff;
   padding: 20px;
@@ -194,6 +205,22 @@ body {
 
 .export:hover {
   opacity: 0.9;
+}
+
+.modalSair {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modalSair-content {
+  background: white;
+  padding: 20px;
+  border-radius: var(--radius);
+  width: 320px;
 }
 
 /* FOOTER */
