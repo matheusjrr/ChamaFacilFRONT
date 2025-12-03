@@ -10,7 +10,6 @@
   --card-w: 1000px;
 }
 
-/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -68,6 +67,11 @@ body {
 
 .main-nav a.active {
   border-bottom: 2px solid var(--primary);
+}
+
+.profile-area i {
+    font-size: 1.8rem;
+    cursor: pointer;
 }
 
 /* LAYOUT */
@@ -229,10 +233,4 @@ body {
   padding: 20px;
   font-size: 0.9rem;
   color: #777;
-}
-
-/* RESPONSIVIDADE */
-@media (max-width: 768px) {
-  .layout { flex-direction: column; }
-  .sidebar { width: 100%; margin-bottom: 20px; }
 }

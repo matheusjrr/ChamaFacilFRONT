@@ -1,4 +1,3 @@
-// home.js
 document.addEventListener('DOMContentLoaded', () => {
     // ===================== LIMPA STORAGE ===================== //
     sessionStorage.clear();
@@ -8,9 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector("header");
     document.addEventListener("scroll", () => {
         if (window.scrollY > 50) {
-            header.classList.add("scrolled");   // adiciona sombra/blur
+            header.classList.add("scrolled");   //sombra/blur
         } else {
-            header.classList.remove("scrolled"); // remove efeito
+            header.classList.remove("scrolled"); 
         }
     });
 

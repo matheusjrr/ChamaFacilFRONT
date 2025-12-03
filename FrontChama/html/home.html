@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chama Fácil</title>
   
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" /> <!-- Ícone que aparece na aba do navegador -->
   
-  <!-- Fonte -->
+  <!-- Fonte usada nas páginas-->
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
-
-  <title>Chama Fácil</title>
+    rel="stylesheet"/>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,11 +20,13 @@
   <link rel="stylesheet" href="../css/home.css" />
 </head>
 
-<body class="bg-white text-gray-800 font-[Poppins]">
+<!-- Corpo da página, fundo branco, texto cinza escuro e fonte Poppins -->
+<body class="bg-white text-gray-800 font-[Poppins]"> 
   <!-- Navbar -->
   <header
-    class="flex justify-between items-center px-8 py-4 bg-white shadow-sm fixed w-full z-50 transition-all duration-300"
-  >
+    class="flex justify-between items-center px-8 py-4 bg-white shadow-sm fixed w-full z-50 transition-all duration-300">
+
+    <!-- Container do logo e nome -->
     <div class="flex items-center gap-2">
       <img
         src="https://c.animaapp.com/mgjwsv993f20b0/img/chatgpt-image-24-de-abr--de-2025--20-26-04-removebg-preview-4.png"
@@ -36,20 +36,14 @@
       <span class="font-bold text-lg text-[#2e364b]">Chama Fácil</span>
     </div>
 
+    <!-- Menu de navegação -->
     <nav class="flex gap-6 items-center">
       <a href="#sobre" class="hover:text-[#2e364b] font-medium">Sobre</a>
       <a href="#funciona" class="hover:text-[#2e364b] font-medium">Como Funciona</a>
       <a href="#time" class="hover:text-[#2e364b] font-medium">Equipe</a>
 
-      <a
-        href="login.html"
-        class="text-[#2e364b] font-semibold hover:underline transition"
-      >Entrar</a>
-
-      <a
-        href="cadastro1.html"
-        class="bg-[#2e364b] text-white px-5 py-2 rounded-full font-semibold hover:bg-[#434b66] transition"
-      >Cadastre-se</a>
+      <a href="login.html" class="text-[#2e364b] font-semibold hover:underline transition">Entrar</a>
+      <a href="cadastro1.html" class="bg-[#2e364b] text-white px-5 py-2 rounded-full font-semibold hover:bg-[#434b66] transition">Cadastre-se</a>
     </nav>
   </header>
 
@@ -60,17 +54,12 @@
     <div class="animate-fadeIn">
       <img
         src="https://c.animaapp.com/mgjwsv993f20b0/img/chatgpt-image-24-de-abr--de-2025--20-26-04-removebg-preview-4.png"
-        class="w-28 mx-auto mb-6"
-        alt="Logo"
-      />
+        class="w-28 mx-auto mb-6" alt="Logo"/> <!-- Logo grande no centro -->
       <h1 class="text-5xl font-bold mb-3 tracking-tight">Chama Fácil</h1>
       <p class="text-lg mb-8 opacity-90">
         Apagando problemas, acendendo soluções
       </p>
-      <a
-        href="login.html"
-        class="border border-white px-8 py-3 rounded-full hover:bg-white hover:text-[#2e364b] transition font-semibold"
-      >Abrir Chamado</a>
+      <a href="login.html" class="border border-white px-8 py-3 rounded-full hover:bg-white hover:text-[#2e364b] transition font-semibold">Abrir Chamado</a>
     </div>
   </section>
 
@@ -180,7 +169,7 @@
     </p>
   </section>
 
-  <!-- Rodapé -->
+  <!-- Rodapé/ Footer -->
   <footer class="bg-[#2e364b] text-white py-12 px-10 lg:px-32">
     <div class="grid md:grid-cols-4 gap-10 text-sm">
       <div>
@@ -223,6 +212,7 @@
     </p>
   </footer>
 
+  <!-- Importa o JS da home -->
   <script src="../js/home.js"></script>
 </body>
 </html>

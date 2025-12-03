@@ -217,7 +217,7 @@ body {
   cursor: pointer;
   font-weight: 600;
   transition: 0.2s;
-  color: white !important; /* ← força todas as letras brancas */
+  color: white !important; 
 }
 
 .btn-voltar {
@@ -404,10 +404,31 @@ body {
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 768px) {
-  .layout { flex-direction: column; }
-  .sidebar { width: 100%; margin: 0 0 20px 0; }
-}
+    .layout {
+        flex-direction: column;
+    }
 
-@media (max-width: 500px) {
-  .search-area input { width: 90%; }
+    .sidebar {
+        width: 100%;
+        margin: 0 0 20px 0;
+    }
+
+    .search-area {
+        position: relative;
+        width: 100%;
+    }
+
+        .search-area input {
+            width: 100%;
+            max-width: 100%;
+            padding: 12px 42px 12px 14px; /* espaço certinho pro ícone */
+            font-size: 14px; /* menor pra caber suave */
+            box-sizing: border-box;
+        }
+
+    .search-icon {
+        right: 12px !important;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 }
