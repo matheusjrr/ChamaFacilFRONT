@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // elementos
     const funcionalInput = document.getElementById('funcional');
     const senhaInput = document.getElementById('senha');
     const toggleSenha = document.getElementById('toggleSenha');
@@ -17,75 +16,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função que controla visibilidade do botão do olho
     const toggleIconVisibility = () => {
-        if (!toggleSenha) return;
+        // usa somente a classe 'hidden' para mostrar/ocultar (não mexer no style.display)
         if (senhaInput.value.length > 0) {
-            // mostra o botão do olho
-            toggleSenha.classList.remove('hidden');
-            toggleSenha.style.pointerEvents = 'auto';
-
+            toggleSenha.classList.remove('hidden'); /* mostra o botão do olho */
             // sincroniza o ícone quando começa a digitar (deve começar como "senha oculta")
             if (iconSenha) {
                 if (senhaInput.type === 'password') {
-                    // ícone de olho FECHADO / riscado (representa senha escondida)
+                    // ícone de olho ABERTO (indica que ao clicar vai mostrar)
                     iconSenha.innerHTML = `
-                        <path d="M2 2l16 16"/>
-                        <path d="M1 10s4-7 9-7 5 2.5 7 5"/>
-                        <path d="M14 14a9.94 9.94 0 0 1-4 .97c-5 0-9-7-9-7a13.94 13.94 0 0 1 3.98-4.09"/>
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
                     `;
                 } else {
-                    // ícone de olho ABERTO (senha visível)
+                    // ícone de olho RISCADO/FECHADO (senha visível)
                     iconSenha.innerHTML = `
-                        <path d="M1 10s4-7 9-7 9 7 9 7-4 7-9 7-9-7-9-7z"/>
-                        <circle cx="10" cy="10" r="3"/>
+                        <path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8S2 12 2 12z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <line x1="2" y1="2" x2="22" y2="22"></line>
                     `;
                 }
             }
         } else {
-            // esconde o botão e garante que o input volte a password
-            toggleSenha.classList.add('hidden');
+            toggleSenha.classList.add('hidden'); /* esconde o botão do olho se o input estiver vazio */
+            senhaInput.type = "password"; /* garante que volta pra password quando limpa */
 
-            // reseta ícone para o padrão correto (sempre oculto)
+            // reseta ícone para estado padrão (olho aberto)
             if (iconSenha) {
-                // coloca o SVG padrão (olho fechado/oculto)
                 iconSenha.innerHTML = `
-                    <path d="M2 2l16 16"/>
-                    <path d="M1 10s4-7 9-7 9 7 9 7-1.43 2.5-3.5 4.22"/>
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
                 `;
             }
-            senhaInput.type = 'password';
         }
     };
 
-    // inicializa visibilidade
+    // ---------- INICIALIZAÇÃO CORRETA DO ESTADO (IMPORTANTE) ----------
+    // Garante que o botão do olho comece escondido e que o input seja password.
+    // NÃO usar style.display aqui; usar a classe 'hidden' apenas.
+    toggleSenha.classList.add('hidden'); /* inicia escondido pra não bugar no 1º digito */
+    senhaInput.type = 'password'; /* garante o tipo inicial */
+
+    // inicializa visibilidade conforme possível valor já presente no input
     toggleIconVisibility();
 
-    // atualiza quando digita
-    senhaInput.addEventListener('input', toggleIconVisibility);
+    // monitora digitação do input de senha
+    senhaInput.addEventListener('input', toggleIconVisibility); /* ativa/oculta o olho quando digita */
 
-    // alterna mostrar/ocultar senha ao clicar no botão
+    // clique do botão do olho alterna entre texto e password
     toggleSenha.addEventListener('click', (e) => {
-    e.preventDefault();
+        e.preventDefault(); /* evita bugs de comportamento padrão do botão */
 
-    if (senhaInput.type === 'password') {
-        senhaInput.type = 'text';
-        // olho aberto
-        iconSenha.innerHTML = `
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-        `;
-    } else {
-        senhaInput.type = 'password';
-        // olho riscado COM a bolinha
-        iconSenha.innerHTML = `
-            <path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8S2 12 2 12z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-            <line x1="2" y1="2" x2="22" y2="22"></line>
-        `;
-    }
+        if (senhaInput.type === 'password') {
+            senhaInput.type = 'text'; /* muda pra texto (senha visível) */
+            // olho riscado/fechado para indicar que agora clicar vai esconder
+            iconSenha.innerHTML = `
+                <path d="M2 12s4-8 10-8 10 8 10 8-4 8-10 8S2 12 2 12z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+                <line x1="2" y1="2" x2="22" y2="22"></line>
+            `;
+        } else {
+            senhaInput.type = 'password'; /* muda pra password (senha oculta) */
+            // olho aberto para indicar que clicar vai mostrar
+            iconSenha.innerHTML = `
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            `;
+        }
 
-    senhaInput.focus();
-});
-
+        senhaInput.focus(); /* mantém o foco no input */
+    });
 
     // Limpa mensagens e bordas de erro
     const resetErrosVisuais = () => {
@@ -166,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Limpa dados se usuário voltar para home (opcional)
+    // Limpa dados se usuário voltar para home 
     const btnSair = document.getElementById('btnSair');
     if (btnSair) {
         btnSair.addEventListener('click', () => {

@@ -22,6 +22,7 @@
 </head>
 
 <body>
+
     <!-- HEADER -->
     <header class="site-header">
         <div class="header-inner">
@@ -36,19 +37,34 @@
             </nav>
 
             <div class="profile-area" title="Perfil">
-                <a href="perfil.html"><i class="fa-solid fa-user-circle"></i></a>
+                <a href="perfil.html">
+                    <i class="fa-solid fa-user-circle"></i>
+                </a>
             </div>
         </div>
     </header>
 
     <!-- LAYOUT -->
     <div class="layout">
+
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <ul>
-                <li><a href="atividades.html"><i class="fa-solid fa-list-check"></i> Minhas Atividades</a></li>
-                <li><a href="chamados.html"><i class="fa-solid fa-headset"></i> Chamados</a></li>
-                <li><a href="perfil.html"><i class="fa-solid fa-user"></i> Perfil</a></li>
+                <li>
+                    <a href="atividades.html">
+                        <i class="fa-solid fa-list-check"></i> Minhas Atividades
+                    </a>
+                </li>
+                <li>
+                    <a href="chamados.html">
+                        <i class="fa-solid fa-headset"></i> Chamados
+                    </a>
+                </li>
+                <li>
+                    <a href="perfil.html">
+                        <i class="fa-solid fa-user"></i> Perfil
+                    </a>
+                </li>
                 <li>
                     <a href="#" onclick="abrirModalSaida()">
                         <i class="fa-solid fa-clipboard-list"></i> Sair
@@ -66,54 +82,68 @@
                     <i class="fa-solid fa-file-code"></i>
                     <h3>Boas práticas de desenvolvimento</h3>
                     <p>Dicas e estratégias para manter o código limpo, legível e sustentável.</p>
-                    <a href="../pdf/boas-praticas.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">Ler artigo</a>
+                    <a href="../pdf/boas-praticas.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">
+                        Ler artigo
+                    </a>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-lock"></i>
                     <h3>Guia de Segurança Digital</h3>
                     <p>Documentação essencial sobre como proteger dados e evitar ataques cibernéticos.</p>
-                    <a href="../pdf/seguranca.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">Abrir documento</a>
+                    <a href="../pdf/seguranca.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">
+                        Abrir documento
+                    </a>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-database"></i>
                     <h3>Banco de Dados — Conceitos e Otimização</h3>
                     <p>Aprenda sobre normalização, índices e consultas otimizadas.</p>
-                    <a href="../pdf/banco-dados.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">Ler mais</a>
+                    <a href="../pdf/banco-dados.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">
+                        Ler mais
+                    </a>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-brain"></i>
                     <h3>Inteligência Artificial na Automação</h3>
                     <p>Artigo explicando como IA pode agilizar processos em empresas de e-commerce.</p>
-                    <a href="../pdf/ia.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">Ver artigo</a>
+                    <a href="../pdf/ia.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">
+                        Ver artigo
+                    </a>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-chart-line"></i>
                     <h3>Relatórios e Power BI</h3>
                     <p>Guia prático sobre criação de dashboards interativos e análise de dados.</p>
-                    <a href="../pdf/power-bi.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">Baixar PDF</a>
+                    <a href="../pdf/power-bi.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">
+                        Baixar PDF
+                    </a>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-network-wired"></i>
                     <h3>Infraestrutura e Redes</h3>
                     <p>Documentação técnica sobre servidores, protocolos e segurança de rede.</p>
-                    <a href="../pdf/redes.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">Ver mais</a>
+                    <a href="../pdf/redes.pdf" class="btn-chamado" target="_blank" rel="noopener noreferrer">
+                        Ver mais
+                    </a>
                 </div>
             </div>
         </main>
+
     </div>
 
-    <!-- botão flutuante -->
+    <!-- Botão flutuante -->
     <button id="chatToggle" class="fixed bottom-6 right-6 bg-[#3B82F6] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:bg-[#1E40AF] transition z-50">
         💬
     </button>
 
     <!-- modal do chat -->
     <div id="chatModal" class="hidden fixed bottom-20 right-6 w-[380px] max-w-[90%] bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden border border-gray-200 z-50">
+
         <!-- header -->
         <header class="flex items-center justify-between bg-[#2F374C] text-white p-3">
             <div class="flex items-center gap-3">
@@ -140,8 +170,11 @@
         <div class="flex items-center gap-2 border-t border-gray-200 p-2 bg-white">
             <input id="userInput" type="text" placeholder="Digite sua mensagem..."
                    class="flex-1 border border-gray-300 rounded-full px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#3B82F6]">
-            <button id="sendBtn" class="bg-[#3B82F6] text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#1E40AF] transition">Enviar</button>
+            <button id="sendBtn" class="bg-[#3B82F6] text-white px-4 py-1.5 rounded-full text-sm hover:bg-[#1E40AF] transition">
+                Enviar
+            </button>
         </div>
+
     </div>
 
     <!-- MODAL DE CONFIRMAÇÃO DE SAÍDA -->
@@ -149,12 +182,15 @@
         <div class="modal-content text-center">
             <h2 class="text-lg font-semibold mb-4 text-gray-800">Tem certeza que deseja sair?</h2>
             <div class="flex justify-center gap-4">
-                <button id="btnConfirmarSair" class="bg-[var(--error)] text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Sair</button>
-                <button id="btnCancelarSair" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition">Cancelar</button>
+                <button id="btnConfirmarSair" class="bg-[var(--error)] text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                    Sair
+                </button>
+                <button id="btnCancelarSair" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition">
+                    Cancelar
+                </button>
             </div>
         </div>
     </div>
-
 
     <!-- FOOTER -->
     <footer class="site-footer">

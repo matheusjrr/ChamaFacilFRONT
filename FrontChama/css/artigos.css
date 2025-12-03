@@ -75,7 +75,7 @@ header.site-header {
 /* ===== LAYOUT ===== */
 .layout {
     display: flex;
-    min-height: 100vh; /* Garante que ocupe a tela toda */
+    min-height: 100vh;
 }
 
 /* ===== SIDEBAR ===== */
@@ -87,7 +87,7 @@ header.site-header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 100vh; /* Sidebar até o final da tela */
+    min-height: 100vh; 
 }
 
 .sidebar ul {
@@ -238,9 +238,9 @@ header.site-header {
     }
 }
 
-/* === estilo do modal de confirmação de saída === */
+/* === MODAL DE SAIDA === */
 .modal {
-    display: none; /* começa escondido */
+    display: none; 
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.6);
@@ -266,18 +266,46 @@ header.site-header {
     font-size: 0.9rem;
     color: #666;
     background: var(--light);
-    margin-top: auto; /* só aparece com scroll */
+    margin-top: auto; 
 }
 
-/* ===== RESPONSIVIDADE ===== */
+/*RESPONSIVIDADE */
+/* MOBILE */
 @media (max-width: 768px) {
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+        position: relative;
+        min-height: auto;
+    }
+
     .cards-container {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr !important;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .site-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .main-nav {
+        display: none;
     }
 }
 
-@media (max-width: 500px) {
+/* TABLET */
+@media (max-width: 1024px) {
     .cards-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 }

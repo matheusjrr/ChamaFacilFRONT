@@ -1,6 +1,5 @@
 ﻿@import url('faq.css');
 
-/* ===== VARIÁVEIS E PADRÕES ===== */
 :root {
     --dark: #2F374C;
     --light: #EDEDED;
@@ -34,7 +33,7 @@ body {
     min-height: 100vh;
 }
 
-/* ===== HEADER PADRONIZADO ===== */
+/* ===== HEADER ===== */
 header.site-header {
     background: var(--dark);
     color: #fff;
@@ -90,10 +89,10 @@ header.site-header {
 .profile-area i {
     font-size: 1.8rem;
     cursor: pointer;
-    color: #fff; /* ícone sempre branco */
+    color: #fff; 
 }
 
-/* ===== LAYOUT PADRONIZADO ===== */
+/* ===== LAYOUT  ===== */
 .layout {
     display: flex;
     flex: 1;
@@ -101,7 +100,7 @@ header.site-header {
     overflow-y: auto;
 }
 
-/* ===== SIDEBAR PADRONIZADA ===== */
+/* ===== SIDEBAR  ===== */
 .sidebar {
     width: 220px;
     background: #0b152b;
@@ -262,9 +261,9 @@ header.site-header {
     }
 }
 
-/* === estilo do modal de confirmação de saída === */
+/* === CONFIRMAÇÃO MODAL SAIDA === */
 .modal {
-    display: none; /* começa escondido */
+    display: none;
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.6);
@@ -283,7 +282,7 @@ header.site-header {
     animation: fadeIn 0.2s ease-out;
 }
 
-/* ===== FOOTER PADRONIZADO ===== */
+/* ===== FOOTER  ===== */
 .site-footer {
     text-align: center;
     padding: 20px;
@@ -306,8 +305,8 @@ header.site-header {
 /* ===== BOTÕES DO MODAL ===== */
 .modal-content .btn-sair,
 .modal-content .btn-fechar {
-    padding: 12px 25px; /* aumenta o tamanho dos botões */
-    font-size: 1rem; /* tamanho da fonte maior e proporcional */
+    padding: 12px 25px; 
+    font-size: 1rem; 
     font-weight: 600;
     border: none;
     border-radius: var(--radius);
@@ -338,9 +337,49 @@ header.site-header {
 .modal-content .flex {
     display: flex;
     justify-content: center;
-    gap: 15px; /* espaçamento entre os botões */
+    gap: 15px; 
     margin-top: 20px;
 }
 
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
 
+    .layout {
+        display: block; /* <-- CORREÇÃO */
+        min-height: auto; /* <-- pra não esmagar */
+    }
 
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .cards-dashboard {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .info-card {
+        width: 100%;
+    }
+
+    .recent-activity {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .site-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .main-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+}

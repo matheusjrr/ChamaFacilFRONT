@@ -1,6 +1,3 @@
-// ==========================
-// Variável global que armazena os chamados vindos da API
-// ==========================
 let chamados = [];
 let chamadosFiltrados = []; // <--- para exportação
 
